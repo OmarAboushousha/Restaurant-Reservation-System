@@ -3,6 +3,7 @@ package restaurantReservationSystem;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,6 +21,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -34,6 +36,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage loginScreen) throws Exception {
 		loginScreen.setTitle("Login");
+		Label restaurantName = new Label("Spring View Restaurant");
+		restaurantName.setFont(Font.font("Times New Roman", FontWeight.BOLD, 30));
 		Label loginLabel = new Label("Login");
 		loginLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		Label username = new Label("Username");
@@ -44,37 +48,27 @@ public class Main extends Application {
 		passwordInput.setPromptText("password");
 		RadioButton customerUser = new RadioButton("Customer");
 		RadioButton staffUser = new RadioButton("Staff");
-		Button loginButton = new Button("Login");
+		Button loginButton = new Button("Log in");
 		GridPane grid = new GridPane();
-		grid.setPadding(new Insets(10, 10, 10, 10));
+		grid.setPadding(new Insets(100, 100, 100, 125));
         grid.setVgap(8);
         grid.setHgap(10);
         
-        grid.add(loginLabel, 0, 0);
-        grid.add(username, 0, 1);
-        grid.add(password, 0, 2);
-        grid.add(usernameInput, 1, 1);
-        grid.add(passwordInput, 1, 2);
-        grid.add(customerUser, 1, 3);
-        grid.add(staffUser, 1, 3);
-        grid.add(loginButton, 1, 5);
+        grid.add(restaurantName, 0, 0, 2, 1);
+        grid.add(loginLabel, 0, 1);
+        grid.add(username, 0, 2);
+        grid.add(password, 0, 3);
+        grid.add(usernameInput, 1, 2);
+        grid.add(passwordInput, 1, 3);
+        grid.add(customerUser, 1, 4);
+        grid.add(staffUser, 1, 4);
+        grid.add(loginButton, 1, 6);
         
         GridPane.setHalignment(customerUser, HPos.RIGHT);
         GridPane.setHalignment(staffUser, HPos.LEFT);
-        GridPane.setHalignment(loginButton, HPos.LEFT);
-        
-        BorderPane border = new BorderPane();
-        AnchorPane anchor = new AnchorPane();
-        anchor.getChildren().add(grid);
-        border.setCenter(anchor);
-        
-        
-        
-        Scene scene = new Scene(border, 600, 400);
-        /*BackgroundImage myBI= new BackgroundImage(new Image("restauarant background.jpg",32,32,false,true),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                  BackgroundSize.DEFAULT);
-        root.setBackground(new Background(myBI));*/
+        GridPane.setHalignment(loginButton, HPos.RIGHT);
+         
+        Scene scene = new Scene(grid, 600, 500);
         
         loginScreen.setScene(scene);
         loginScreen.show();
