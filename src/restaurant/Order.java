@@ -1,4 +1,9 @@
-package restaurantReservationSystem;
+package restaurant;
+
+import customers.Customer;
+import restaurant.food.Dish;
+import restaurant.table.Table;
+import restaurantReservationSystem.Date;
 
 public class Order {
 	

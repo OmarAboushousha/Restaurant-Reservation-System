@@ -1,4 +1,6 @@
-package restaurantReservationSystem;
+package restaurant.table;
+
+import restaurant.Order;
 
 public abstract class Table {
 

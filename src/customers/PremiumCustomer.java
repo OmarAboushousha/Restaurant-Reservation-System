@@ -1,8 +1,10 @@
-package restaurantReservationSystem;
+package customers;
+
+import restaurantReservationSystem.Date;
 
 public class PremiumCustomer extends Customer {
 	
-	private float discount;
+	private double discount = 0.1;
 	private Date expirationDate;
 
 }

@@ -1,4 +1,4 @@
-package restaurantReservationSystem;
+package customers;
 
 public interface MethodOfPayment {
 
