@@ -35,6 +35,9 @@ public class XMLFileHandler {
 				restaurant.persons.add(new Customer(user.getName(), user.getUsername(), user.getPassword()));
 		}
 		
+		DishUnmodified test = restaurant.getDishes().getDishUnmodified().get(0);
+		System.out.println(test.getName());
+
 		for(DishUnmodified dishUnmodified: restaurant.getDishes().getDishUnmodified()) {
 			if (dishUnmodified.getType().equals("appetizer"))
 				restaurant.menu.add(new Appetizers(dishUnmodified.getName(), dishUnmodified.getPrice()));
@@ -45,7 +48,6 @@ public class XMLFileHandler {
 			else if (dishUnmodified.getType().equals("drinks"))
 				restaurant.menu.add(new Drinks(dishUnmodified.getName(), dishUnmodified.getPrice()));
 		}
-		
 		return restaurant;
 		
 	}

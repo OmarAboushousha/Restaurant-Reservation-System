@@ -22,10 +22,10 @@ public class Order {
 		return order;
 	}
 	
-	public float addCoupon(String couponCode)
+	/*public float addCoupon(String couponCode)
 	{
 		
-	}
+	}*/
 	
 	public float calculatePrice()
 	{

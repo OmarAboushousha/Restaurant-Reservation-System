@@ -9,7 +9,7 @@ import restaurant.Order;
 
 @XmlRootElement(name = "table")
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class Table {
+public class Table {
 
 	private Order currentOrder;
 	

@@ -1,6 +1,7 @@
 package xmlHandlers;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -11,7 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import restaurant.food.Dish;
 import restaurant.table.Table;
 import restaurantReservationSystem.Person;
-
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "restaurant")
 public class Restaurant {
 	
 	@XmlElement(name = "users")

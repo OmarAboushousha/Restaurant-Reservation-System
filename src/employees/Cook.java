@@ -9,10 +9,10 @@ public class Cook extends Employee {
 		super(name, username, password);
 	}
 	
-	public Dish[] viewMenu()
+	/*public Dish[] viewMenu()
 	{
 		return menu;
-	}
+	}*/
 
 	public void editMenu(Dish[] dishes)
 	{

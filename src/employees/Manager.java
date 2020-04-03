@@ -9,20 +9,20 @@ public class Manager extends Employee {
 		super(name, username, password);
 	}
 
-	public Dish[] viewMenu()
+	/*public Dish[] viewMenu()
 	{
 		return menu;
-	}
+	}*/
 	
 	public void editDishPrice(Dish dish)
 	{
 		//TODO: allows manager to access dishes' prices and change them
 	}
 	
-	public restaurantDay viewRestaurantDay()
+	/*public restaurantDay viewRestaurantDay()
 	{
 		return day;
-	}
+	}*/
 
 	@Override
 	public Order seeOrder(int orderNumber) {

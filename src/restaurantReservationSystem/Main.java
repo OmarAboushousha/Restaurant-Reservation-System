@@ -36,10 +36,10 @@ public class Main extends Application {
 		//launch(args);
 		try {
 			Restaurant restaurant = XMLFileHandler.LoadFile("Data.xml");
-			for (Person person: restaurant.getPersons())
+			/*for (Person person: restaurant.getPersons())
 			{
 				System.out.println(person.getName() + " " + person.getUsername() + "\n");
-			}
+			}*/
 				
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block

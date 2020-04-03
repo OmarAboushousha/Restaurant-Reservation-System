@@ -16,15 +16,15 @@ public class Customer extends Person {
 	private String visaCardNumber;
 	private String visaCardPinCode;
 	
-	public Table reserveTable() {
+	/*public Table reserveTable() {
 		//TODO: code to access table class and find a table corresponding to users needs
 		
 		
-	}
+	}*/
 	
-	public Order makeOrder(Table chosenTable) {
+	/*public Order makeOrder(Table chosenTable) {
 		//TODO: code to start choosing dishes to add to the order
-	}
+	}*/
 	
 	public void checkOut(Order order) {
 		//TODO: code to let user choose method of payment

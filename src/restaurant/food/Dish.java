@@ -4,14 +4,17 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "dish")
-@XmlAccessorType(XmlAccessType.FIELD)
 public abstract class Dish {
 	
 	
 	private String name;
 	private double price;
 	private double tax;
+	
+	public Dish() {
+		super();
+	}
+	
 	public Dish(String name, double price) {
 		this.name = name;
 		this.price = price;
@@ -22,7 +25,7 @@ public abstract class Dish {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 	public void setPrice(float price) {
