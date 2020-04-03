@@ -1,5 +1,7 @@
 package restaurantReservationSystem;
 
+import javax.xml.bind.JAXBException;
+
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -25,11 +27,25 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import xmlHandlers.Restaurant;
+import xmlHandlers.XMLFileHandler;
 
 public class Main extends Application {
 
 	public static void main(String[] args) {
-		launch(args);
+		//launch(args);
+		try {
+			Restaurant restaurant = XMLFileHandler.LoadFile("Data.xml");
+			for (Person person: restaurant.getPersons())
+			{
+				System.out.println(person.getName() + " " + person.getUsername() + "\n");
+			}
+				
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
 

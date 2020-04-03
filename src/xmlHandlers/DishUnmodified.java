@@ -1,40 +1,45 @@
-package restaurant.food;
+package xmlHandlers;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "dish")
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class Dish {
+public class DishUnmodified {
 	
-	
+	@XmlElement(name = "name")
 	private String name;
+	
+	@XmlElement(name = "price")
 	private double price;
-	private double tax;
-	public Dish(String name, double price) {
-		this.name = name;
-		this.price = price;
-	}
+	
+	@XmlElement(name = "type")
+	private String type;
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public float getPrice() {
+
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(float price) {
+
+	public void setPrice(double price) {
 		this.price = price;
 	}
-	public double getTax() {
-		return tax;
+
+	public String getType() {
+		return type;
 	}
-	public void setTax(double d) {
-		this.tax = d;
+
+	public void setType(String type) {
+		this.type = type;
 	}
-	
-	
 
 }

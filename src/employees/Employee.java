@@ -5,11 +5,19 @@ import restaurantReservationSystem.Person;
 
 public abstract class Employee extends Person {
 	
+	
+	
 	private float salary;
 	private int daysOff;
 	
 	
 	
+	public Employee(String name, String username, String password) {
+		super(name, username, password);
+	}
+
+
+
 	public float getSalary() {
 		return salary;
 	}

@@ -1,10 +1,16 @@
 package customers;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+
 import restaurant.Order;
 import restaurant.table.Table;
 import restaurantReservationSystem.Person;
 
 public class Customer extends Person {
+	
+	public Customer(String name, String username, String password) {
+		super(name, username, password);
+	}
 
 	private float balance;
 	private String visaCardNumber;

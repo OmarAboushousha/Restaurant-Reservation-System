@@ -5,6 +5,10 @@ import restaurant.food.Dish;
 
 public class Manager extends Employee {
 
+	public Manager(String name, String username, String password) {
+		super(name, username, password);
+	}
+
 	public Dish[] viewMenu()
 	{
 		return menu;
