@@ -34,4 +34,10 @@ public class Table {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return String.valueOf(tableNumber);
+	}
+	
 }

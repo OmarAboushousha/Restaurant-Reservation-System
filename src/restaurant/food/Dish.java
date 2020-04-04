@@ -35,6 +35,10 @@ public abstract class Dish {
 		this.tax = d;
 	}
 	
-	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return name;
+	}
 
 }

@@ -7,6 +7,7 @@ import customers.Customer;
 import employees.Cook;
 import employees.Manager;
 import employees.Waiter;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -17,9 +18,13 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToolBar;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -35,6 +40,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import restaurant.Order;
+import restaurantReservationSystem.Date;
 import restaurantReservationSystem.Person;
 
 public class Dashboard {
@@ -43,6 +50,8 @@ public class Dashboard {
 		
 		String passIcon = "";
 		String typeString;
+		Label header = new Label("Profile");
+		header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		Label name = new Label("Name:\t\t" + person.getName());
 		if (person instanceof Customer) 
 			typeString = "customer";
@@ -60,13 +69,16 @@ public class Dashboard {
 		Label password = new Label("password:\t\t" + passIcon);
 		
 		mainScreenArea.getChildren().clear();
-		mainScreenArea.add(name, 0, 0);
-		mainScreenArea.add(accountType, 0, 1);
-		mainScreenArea.add(username, 0, 2);
-		mainScreenArea.add(password, 0, 3);
+		mainScreenArea.add(header, 0, 0);
+		mainScreenArea.add(name, 0, 1);
+		mainScreenArea.add(accountType, 0, 2);
+		mainScreenArea.add(username, 0, 3);
+		mainScreenArea.add(password, 0, 4);
 	}
 	
 	private static void showSettings(Person person, GridPane mainScreenArea) {
+		Label header = new Label("Settings");
+		header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		String passIcon = "";
 		String typeString;
 		Label name = new Label("Name:\t\t" + person.getName());
@@ -93,16 +105,17 @@ public class Dashboard {
 		Button save = new Button("Save");
 		
 		mainScreenArea.getChildren().clear();
-		mainScreenArea.add(name, 0, 0);
-		mainScreenArea.add(accountType, 0, 1);
-		mainScreenArea.add(username, 0, 2);
-		mainScreenArea.add(password, 0, 3);
+		mainScreenArea.add(header, 0, 0);
+		mainScreenArea.add(name, 0, 1);
+		mainScreenArea.add(accountType, 0, 2);
+		mainScreenArea.add(username, 0, 3);
+		mainScreenArea.add(password, 0, 4);
 		
-		mainScreenArea.add(editName, 1, 0);
-		mainScreenArea.add(editUserName, 1, 2);
-		mainScreenArea.add(editPassword, 1, 3);
-		mainScreenArea.add(save, 3, 5);
-		mainScreenArea.add(spacer, 2, 4);
+		mainScreenArea.add(editName, 1, 1);
+		mainScreenArea.add(editUserName, 1, 3);
+		mainScreenArea.add(editPassword, 1, 4);
+		mainScreenArea.add(save, 3, 6);
+		mainScreenArea.add(spacer, 2, 5);
 		
 		//edit buttons actions
 		editName.setOnAction(new EventHandler<ActionEvent>() {
@@ -258,6 +271,51 @@ private static void editPasswordField(Person person) {
 	
 	
 }
+private static void logoutConfirmation(Stage currentStage) {
+	Stage logoutConfirm = new Stage();
+	logoutConfirm.initModality(Modality.APPLICATION_MODAL);
+	logoutConfirm.setTitle("Confirm");
+	
+	Label label = new Label("Are you sure you wish to log out?");
+    Button yes = new Button("Yes");
+    Button no = new Button("No");
+   yes.setOnAction(new EventHandler<ActionEvent>() {
+		
+		@Override
+		public void handle(ActionEvent arg0) {
+			LoginScreen.loginScreen(new Stage());
+			currentStage.close();
+			logoutConfirm.close();
+		}
+	
+	});
+   
+   no.setOnAction(new EventHandler<ActionEvent>() {
+		
+		@Override
+		public void handle(ActionEvent arg0) {
+			logoutConfirm.close();
+		}
+   });
+    
+    GridPane grid = new GridPane();
+    grid.setVgap(10);
+    grid.setHgap(10);
+    grid.setPadding(new Insets(100, 100, 100, 125));
+    grid.add(label, 0, 0, 2, 1);
+    grid.add(yes, 0, 1);
+    grid.add(no, 1, 1);
+    
+    GridPane.setHalignment(label, HPos.CENTER);
+    GridPane.setHalignment(yes, HPos.LEFT);
+    GridPane.setHalignment(no, HPos.RIGHT);
+
+	
+	Scene scene = new Scene(grid, 450, 250);
+	logoutConfirm.setScene(scene);
+	logoutConfirm.showAndWait();
+	}
+
 
 	public static void showCustomer(Customer customer, Stage stage) throws FileNotFoundException {
 		
@@ -345,8 +403,51 @@ private static void editPasswordField(Person person) {
 			}
 		});
         //orderHistoryButton
+        orderHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				mainScreenArea.getChildren().clear();
+				Label header = new Label("Order History");
+				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+				
+				TableView<Order> tableView = new TableView<>();
+				
+				//Date column
+				TableColumn<Order, Date> dateColumn = new TableColumn<>("Date");
+				dateColumn.setMinWidth(100);
+		        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+		        
+				//Time column
+		        TableColumn<Order, Date> timeColumn = new TableColumn<>("Time");
+		        timeColumn.setMinWidth(100);
+		        dateColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+		        
+				//table number
+		        TableColumn<Order, Date> tableColumn = new TableColumn<>("Table Number");
+		        tableColumn.setMinWidth(150);
+		        dateColumn.setCellValueFactory(new PropertyValueFactory<>("table"));
+		        
+				//price
+		        
+		        tableView.setItems(customer.getOrderHistory());
+		        tableView.getColumns().addAll(dateColumn, timeColumn, tableColumn);
+		        
+		        mainScreenArea.add(header, 0, 0);
+		        mainScreenArea.add(tableView, 0, 1);
+				
+			}
+		});
         //makeNewOrderButton
         //logOutButton
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				logoutConfirmation(stage);
+				
+			}
+		});
         //reviewUsButton
         
         
@@ -428,6 +529,34 @@ private static void editPasswordField(Person person) {
         
         GridPane.setHalignment(logOutButton, HPos.RIGHT);
         
+        //buttons functionality
+ viewProfileButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				showProfile(manager, mainScreenArea);
+				
+			}
+		});
+        //settingsButton
+        settingsButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				showSettings(manager, mainScreenArea);
+				
+			}
+        });
+        
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				logoutConfirmation(stage);
+				
+			}
+        });
+        
         Scene scene = new Scene(border, 700, 500);
         
         stage.setScene(scene);
@@ -496,6 +625,34 @@ private static void editPasswordField(Person person) {
         
         GridPane.setHalignment(logOutButton, HPos.RIGHT);
         
+      //buttons functionality
+        viewProfileButton.setOnAction(new EventHandler<ActionEvent>() {
+       			
+       			@Override
+       			public void handle(ActionEvent event) {
+       				showProfile(cook, mainScreenArea);
+       				
+       			}
+       		});
+               //settingsButton
+               settingsButton.setOnAction(new EventHandler<ActionEvent>() {
+
+       			@Override
+       			public void handle(ActionEvent event) {
+       				showSettings(cook, mainScreenArea);
+       				
+       			}
+               });
+               
+               logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+
+       			@Override
+       			public void handle(ActionEvent event) {
+       				logoutConfirmation(stage);
+       				
+       			}
+               });
+        
         Scene scene = new Scene(border, 700, 500);
         
         stage.setScene(scene);
@@ -557,6 +714,34 @@ private static void editPasswordField(Person person) {
         mainScreenArea.setHgap(10);
         
         GridPane.setHalignment(logOutButton, HPos.RIGHT);
+        
+      //buttons functionality
+        viewProfileButton.setOnAction(new EventHandler<ActionEvent>() {
+       			
+       			@Override
+       			public void handle(ActionEvent event) {
+       				showProfile(waiter, mainScreenArea);
+       				
+       			}
+       		});
+               //settingsButton
+               settingsButton.setOnAction(new EventHandler<ActionEvent>() {
+
+       			@Override
+       			public void handle(ActionEvent event) {
+       				showSettings(waiter, mainScreenArea);
+       				
+       			}
+               });
+               
+               logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+
+       			@Override
+       			public void handle(ActionEvent event) {
+       				logoutConfirmation(stage);
+       				
+       			}
+               });
         
         Scene scene = new Scene(border, 700, 500);
         
