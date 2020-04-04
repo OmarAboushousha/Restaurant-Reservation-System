@@ -1,7 +1,5 @@
 package xmlHandlers;
 
-import java.util.ArrayList;
-
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,7 +8,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import restaurant.food.Dish;
-import restaurant.table.Table;
 import restaurantReservationSystem.Person;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "restaurant")
@@ -58,6 +55,14 @@ public class Restaurant {
 
 	public void setPersons(List<Person> persons) {
 		this.persons = persons;
+	}
+
+	public List<Dish> getMenu() {
+		return menu;
+	}
+
+	public void setMenu(List<Dish> menu) {
+		this.menu = menu;
 	}
 	
 

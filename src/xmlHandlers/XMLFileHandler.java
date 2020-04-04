@@ -1,6 +1,7 @@
 package xmlHandlers;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -12,8 +13,10 @@ import employees.Manager;
 import employees.Waiter;
 import restaurant.food.Drinks;
 import restaurant.food.MainCourse;
+import restaurantReservationSystem.Main;
 import restaurant.food.Appetizers;
 import restaurant.food.Dessert;
+import restaurant.food.Dish;
 
 public class XMLFileHandler {
 
@@ -24,29 +27,29 @@ public class XMLFileHandler {
 		
 		Restaurant restaurant = (Restaurant) unmarshaller.unmarshal(new File(filename));
 		
+		restaurant.persons = new ArrayList<>();
 		for (User user: restaurant.getUsers().getUsers()) {
-			if (user.getRole().equals("manager"))
+			if (user.getRole().equals("Manager"))
 				restaurant.persons.add(new Manager(user.getName(), user.getUsername(), user.getPassword()));
-			else if (user.getRole().equals("cook"))
+			else if (user.getRole().equals("Cooker"))
 				restaurant.persons.add(new Cook(user.getName(), user.getUsername(), user.getPassword())); 
-			else if (user.getRole().equals("waiter"))
+			else if (user.getRole().equals("Waiter"))
 				restaurant.persons.add(new Waiter(user.getName(), user.getUsername(), user.getPassword()));
-			else if (user.getRole().equals("customer"))
+			else if (user.getRole().equals("Client"))
 				restaurant.persons.add(new Customer(user.getName(), user.getUsername(), user.getPassword()));
 		}
 		
-		DishUnmodified test = restaurant.getDishes().getDishUnmodified().get(0);
-		System.out.println(test.getName());
-
-		for(DishUnmodified dishUnmodified: restaurant.getDishes().getDishUnmodified()) {
-			if (dishUnmodified.getType().equals("appetizer"))
-				restaurant.menu.add(new Appetizers(dishUnmodified.getName(), dishUnmodified.getPrice()));
-			else if (dishUnmodified.getType().equals("main_course"))
-				restaurant.menu.add(new MainCourse(dishUnmodified.getName(), dishUnmodified.getPrice()));
-			else if (dishUnmodified.getType().equals("desert"))
-				restaurant.menu.add(new Dessert(dishUnmodified.getName(), dishUnmodified.getPrice()));
-			else if (dishUnmodified.getType().equals("drinks"))
-				restaurant.menu.add(new Drinks(dishUnmodified.getName(), dishUnmodified.getPrice()));
+		
+		restaurant.menu = new ArrayList<Dish>();
+		for (DishX dishX: restaurant.getDishes().getDishes()) {
+			if (dishX.getType().contentEquals("appetizer"))
+				restaurant.menu.add(new Appetizers(dishX.getName(), dishX.getPrice()));
+			else if (dishX.getType().contentEquals("main_course"))
+				restaurant.menu.add(new MainCourse(dishX.getName(), dishX.getPrice()));
+			else if (dishX.getType().contentEquals("desert"))
+					restaurant.menu.add(new Dessert(dishX.getName(), dishX.getPrice()));
+			else if (dishX.getType().contentEquals("drink"))
+						restaurant.menu.add(new Drinks(dishX.getName(), dishX.getPrice()));
 		}
 		return restaurant;
 		

@@ -1,5 +1,6 @@
 package xmlHandlers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,6 +14,6 @@ import restaurant.table.Table;
 public class Tables {
 	
 	@XmlElement(name = "table")
-	private List<Table> tables;
+	private List<Table> tables = new ArrayList<>();
 
 }
