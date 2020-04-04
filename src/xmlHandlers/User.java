@@ -5,6 +5,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import restaurant.Order;
+
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class User {
@@ -20,6 +22,18 @@ public class User {
 	
 	@XmlElement(name = "role")
 	private String role;
+	
+	@XmlElement(name = "balance")
+	private float balance;
+	
+	@XmlElement(name = "order")
+	private Order order;
+	
+	@XmlElement(name = "card_number")
+	private String visaCardNumber;
+	
+	@XmlElement(name = "pin_code")
+	private String visaCardPinCode;
 
 	public String getName() {
 		return name;
@@ -52,6 +66,36 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
-	
+
+	public float getBalance() {
+		return balance;
+	}
+
+	public void setBalance(float balance) {
+		this.balance = balance;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public String getVisaCardNumber() {
+		return visaCardNumber;
+	}
+
+	public void setVisaCardNumber(String visaCardNumber) {
+		this.visaCardNumber = visaCardNumber;
+	}
+
+	public String getVisaCardPinCode() {
+		return visaCardPinCode;
+	}
+
+	public void setVisaCardPinCode(String visaCardPinCode) {
+		this.visaCardPinCode = visaCardPinCode;
+	}
 }

@@ -28,15 +28,24 @@ public class XMLFileHandler {
 		Restaurant restaurant = (Restaurant) unmarshaller.unmarshal(new File(filename));
 		
 		restaurant.persons = new ArrayList<>();
+		
 		for (User user: restaurant.getUsers().getUsers()) {
 			if (user.getRole().equals("Manager"))
-				restaurant.persons.add(new Manager(user.getName(), user.getUsername(), user.getPassword()));
+				restaurant.persons.add(new Manager(user.getName(), user.getUsername(),
+						user.getPassword()));
+			
 			else if (user.getRole().equals("Cooker"))
-				restaurant.persons.add(new Cook(user.getName(), user.getUsername(), user.getPassword())); 
+				restaurant.persons.add(new Cook(user.getName(), user.getUsername(),
+						user.getPassword()));
+			
 			else if (user.getRole().equals("Waiter"))
-				restaurant.persons.add(new Waiter(user.getName(), user.getUsername(), user.getPassword()));
+				restaurant.persons.add(new Waiter(user.getName(), user.getUsername(),
+						user.getPassword()));
+			
 			else if (user.getRole().equals("Client"))
-				restaurant.persons.add(new Customer(user.getName(), user.getUsername(), user.getPassword()));
+				restaurant.persons.add(new Customer(user.getName(), user.getUsername(),
+						user.getPassword(), user.getBalance(), user.getVisaCardNumber(),
+						user.getVisaCardPinCode(), user.getOrder()));
 		}
 		
 		

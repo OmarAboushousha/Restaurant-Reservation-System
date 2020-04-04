@@ -53,10 +53,4 @@ public abstract class Person extends User {
 		}
 		return null;
 	}
-	
-	public void logout()
-	{
-		//change window appearance back to login screen using gui
-	}
-
 }

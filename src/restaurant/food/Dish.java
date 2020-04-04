@@ -1,9 +1,7 @@
 package restaurant.food;
 
-
 public abstract class Dish {
-	
-	
+
 	private String name;
 	private double price;
 	private double tax;
@@ -40,5 +38,4 @@ public abstract class Dish {
 		// TODO Auto-generated method stub
 		return name;
 	}
-
 }

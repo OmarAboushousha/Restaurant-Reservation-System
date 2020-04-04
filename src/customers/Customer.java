@@ -12,27 +12,33 @@ import restaurant.table.Table;
 import restaurantReservationSystem.Person;
 
 public class Customer extends Person {
-	
-	public Customer(String name, String username, String password) {
-		super(name, username, password);
-	}
 
 	private float balance;
 	private String visaCardNumber;
 	private String visaCardPinCode;
-	private ObservableList<Order> orderHistory = FXCollections.observableArrayList();
+	private Order currentOrder;
 	
+	public Customer(String name, String username, String password) {
+		super(name, username, password);
+	}
 	
-	public ObservableList<Order> getOrderHistory() {
-		return orderHistory;
+	public Customer(String name, String username, String password, float balance, String visaCardNumber,
+			String visaCardPinCode, Order currentOrder) {
+		super(name, username, password);
+		this.balance = balance;
+		this.visaCardNumber = visaCardNumber;
+		this.visaCardPinCode = visaCardPinCode;
+		this.currentOrder = currentOrder;
+	}
+	
+	public Order getCurrentOrder() {
+		return currentOrder;
 	}
 
-	public void setOrderHistory(ObservableList<Order> orderHistory) {
-		this.orderHistory = orderHistory;
+	public void setCurrentOrder(Order currentOrder) {
+		this.currentOrder = currentOrder;
 	}
 
-	
-	
 	public float getBalance() {
 		return balance;
 	}
@@ -55,9 +61,7 @@ public class Customer extends Person {
 
 	public void setVisaCardPinCode(String visaCardPinCode) {
 		this.visaCardPinCode = visaCardPinCode;
-	}
-
-	
+	}	
 
 	public void checkOut(Order order) {
 		//TODO: code to let user choose method of payment

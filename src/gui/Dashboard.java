@@ -43,6 +43,7 @@ import javafx.stage.Stage;
 import restaurant.Order;
 import restaurantReservationSystem.Date;
 import restaurantReservationSystem.Person;
+import xmlHandlers.DishX;
 
 public class Dashboard {
 	
@@ -343,9 +344,9 @@ private static void logoutConfirmation(Stage currentStage) {
 		GridPane makeOrderGrid = new GridPane();
 		makeOrderGrid.setVgap(4);
 		makeOrderGrid.setPadding(new Insets(5, 5, 5, 5));
-		Button orderHistoryButton = new Button("View history");
+		Button viewOrderButton = new Button("View order");
 		Button makeNewOrderButton = new Button("Make a reservation");
-		makeOrderGrid.add(orderHistoryButton, 0, 0);
+		makeOrderGrid.add(viewOrderButton, 0, 0);
 		makeOrderGrid.add(makeNewOrderButton, 0, 1);
 		orderPane.setContent(makeOrderGrid);
 		
@@ -402,43 +403,30 @@ private static void logoutConfirmation(Stage currentStage) {
 				
 			}
 		});
-        //orderHistoryButton
-        orderHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
+        //viewOrderButton
+        viewOrderButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				mainScreenArea.getChildren().clear();
-				Label header = new Label("Order History");
+				Label header = new Label("Order review");
 				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 				
-				TableView<Order> tableView = new TableView<>();
-				
-				//Date column
-				TableColumn<Order, Date> dateColumn = new TableColumn<>("Date");
-				dateColumn.setMinWidth(100);
-		        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-		        
-				//Time column
-		        TableColumn<Order, Date> timeColumn = new TableColumn<>("Time");
-		        timeColumn.setMinWidth(100);
-		        dateColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-		        
-				//table number
-		        TableColumn<Order, Date> tableColumn = new TableColumn<>("Table Number");
-		        tableColumn.setMinWidth(150);
-		        dateColumn.setCellValueFactory(new PropertyValueFactory<>("table"));
-		        
-				//price
-		        
-		        tableView.setItems(customer.getOrderHistory());
-		        tableView.getColumns().addAll(dateColumn, timeColumn, tableColumn);
-		        
 		        mainScreenArea.add(header, 0, 0);
-		        mainScreenArea.add(tableView, 0, 1);
-				
+		        
+		        int column = 1;
+				Label[] info = new Label[20];
+
+				for(int counter = 0; counter < customer.getCurrentOrder().getDishes().size(); counter++) {
+					info[counter].setText(customer.getCurrentOrder().getDishes().get(counter).getName() +
+							"\t" + customer.getCurrentOrder().getDishes().get(counter).getPrice());
+					info[counter].setFont(Font.font("Monaco", FontWeight.NORMAL, 10));
+					mainScreenArea.add(info[counter], 0, column);
+					column++;
+				}			
 			}
 		});
-        //makeNewOrderButton
+        //makeNewOrderButton    
         //logOutButton
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
