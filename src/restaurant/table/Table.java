@@ -22,7 +22,8 @@ public class Table {
 	@XmlElement(name = "smoking")
 	private boolean smoking;
 	
-	private boolean available;
+	@XmlElement(name = "available")
+	private boolean available = true;
 	
 	public Order getCurrentOrder() {
 		return currentOrder;
@@ -66,18 +67,15 @@ public class Table {
 
 	public void reserveTable()
 	{
-		if(!available)
-			System.out.println("Table not available.");
-		else
-		{
-			
-		}
+		
 	}
 	
+	public stat void 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return String.valueOf(tableNumber);
+		if (isSmoking())
+			return String.valueOf(tableNumber) + "\t" +  "smoking";
+		return String.valueOf(tableNumber) + "\t" +  "non-smoking";
 	}
 	
 }
