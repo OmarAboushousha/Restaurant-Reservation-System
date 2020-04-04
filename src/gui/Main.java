@@ -45,7 +45,7 @@ public class Main extends Application {
 	}
 	@Override
 	public void start(Stage loginScreen) throws Exception {
-		Dashboard.showWaiter(new Waiter("ahmed", "js", "eje"), loginScreen);
+		Dashboard.showCustomer(new Customer("ahmed", "js", "eje"), loginScreen);
 		/*try {
 			
 			Restaurant restaurant = XMLFileHandler.LoadFile("Data.xml");
