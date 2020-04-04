@@ -1,8 +1,9 @@
-package restaurantReservationSystem;
+package gui;
 
 import javax.xml.bind.JAXBException;
 
-import gui.FileLoadError;
+import customers.Customer;
+import employees.Employee;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,6 +31,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import restaurantReservationSystem.Person;
 import xmlHandlers.Restaurant;
 import xmlHandlers.XMLFileHandler;
 
@@ -63,18 +65,45 @@ public class Main extends Application {
 				@Override
 				public void handle(ActionEvent event) {
 					staffUser.setSelected(false);
-					
 				}
 			});
 			staffUser.setOnAction(new EventHandler<ActionEvent>() {
 				
 				@Override
 				public void handle(ActionEvent event) {
-					customerUser.setSelected(false);
-					
+					customerUser.setSelected(false);	
 				}
 			});
 			Button loginButton = new Button("Log in");
+			
+			loginButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					Person person;
+					person = Person.login(usernameInput.getText(), passwordInput.getText(), restaurant);
+					
+					if(person == null)
+						LoginError.display("Invalid username or password.");
+					else {
+						if(staffUser.isSelected()) {
+							if (person instanceof Employee) {
+								//TODO: redirect to staff type dashboard
+							}
+							else LoginError.display("Please choose correct type of user.");
+						}
+						else if (customerUser.isSelected()) {
+							if (person instanceof Customer) {
+								//TODO: redirect to customer dashboard
+							}
+							else LoginError.display("Please choose correct type of user.");
+						} else LoginError.display("Please choose correct type of user.");
+						
+					}
+				}
+				
+			});
+			
 			GridPane grid = new GridPane();
 			grid.setPadding(new Insets(100, 100, 100, 125));
 	        grid.setVgap(8);

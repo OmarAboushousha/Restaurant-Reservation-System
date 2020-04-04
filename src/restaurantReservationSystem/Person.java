@@ -1,12 +1,13 @@
 package restaurantReservationSystem;
 
-public abstract class Person {
+import xmlHandlers.Restaurant;
+import xmlHandlers.User;
+
+public abstract class Person extends User {
 	
 	private String name;
 	private String username;
 	private String password;
-	
-	
 	
 	public String getName() {
 		return name;
@@ -38,17 +39,14 @@ public abstract class Person {
 		this.password = password;
 	}
 
-	public void login(String usernameInput, String passwordInput)
+	public static Person login(String usernameInput, String passwordInput, Restaurant restaurant)
 	{
-		while(!usernameInput.equals(username)
-				&& !passwordInput.equals(password))
+		for(Person person: restaurant.getPersons())
 		{
-			//output to be changed from console to screen after adding gui
-			System.out.println("INVALID INPUT.\n"
-					+ "Enter the correct username and password.");
+			if(person.username.equals(usernameInput) && person.password.equals(passwordInput))
+				return person;
 		}
-		
-		//change window appearance to dashboard depending on user using gui
+		return null;
 	}
 	
 	public void logout()
