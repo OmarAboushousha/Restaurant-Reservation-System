@@ -22,22 +22,60 @@ public class Table {
 	@XmlElement(name = "smoking")
 	private boolean smoking;
 	
-	private boolean available;
+	@XmlElement(name = "available")
+	private boolean available = true;
 	
+	public Order getCurrentOrder() {
+		return currentOrder;
+	}
+
+	public void setCurrentOrder(Order currentOrder) {
+		this.currentOrder = currentOrder;
+	}
+
+	public int getNumberOfSeats() {
+		return numberOfSeats;
+	}
+
+	public void setNumberOfSeats(int numberOfSeats) {
+		this.numberOfSeats = numberOfSeats;
+	}
+
+	public int getTableNumber() {
+		return tableNumber;
+	}
+
+	public void setTableNumber(int tableNumber) {
+		this.tableNumber = tableNumber;
+	}
+
+	public boolean isSmoking() {
+		return smoking;
+	}
+
+	public void setSmoking(boolean smoking) {
+		this.smoking = smoking;
+	}
+
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
+
 	public void reserveTable()
 	{
-		if(!available)
-			System.out.println("Table not available.");
-		else
-		{
-			
-		}
+		
 	}
 	
+	public stat void 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return String.valueOf(tableNumber);
+		if (isSmoking())
+			return String.valueOf(tableNumber) + "\t" +  "smoking";
+		return String.valueOf(tableNumber) + "\t" +  "non-smoking";
 	}
 	
 }

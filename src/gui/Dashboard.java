@@ -2,6 +2,7 @@ package gui;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import customers.Customer;
 import employees.Cook;
@@ -16,9 +17,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox; javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -41,8 +42,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import restaurant.Order;
+import restaurant.table.Table;
 import restaurantReservationSystem.Date;
 import restaurantReservationSystem.Person;
+import xmlHandlers.Restaurant;
 
 public class Dashboard {
 	
@@ -317,9 +320,11 @@ private static void logoutConfirmation(Stage currentStage) {
 	}
 
 
-	public static void showCustomer(Customer customer, Stage stage) throws FileNotFoundException {
+	public static void showCustomer(Customer customer, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 		
 		//Layout
+		
+		stage.setTitle("Dashboard");
 		
 		BorderPane border = new BorderPane();
 		Accordion accordion = new Accordion();
@@ -439,17 +444,79 @@ private static void logoutConfirmation(Stage currentStage) {
 			}
 		});
         //makeNewOrderButton
+        makeNewOrderButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				mainScreenArea.getChildren().clear();
+				Label header = new Label("Reserve a table");
+				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+				
+				
+				ComboBox<Table> checkAvailable = new ComboBox<>(restaurant.retrieveAvailableTables());
+				checkAvailable.setPromptText("Check available tables");
+				Button selectButton = new Button("Select");
+				mainScreenArea.add(header, 0, 0);
+				mainScreenArea.add(checkAvailable, 0, 1);
+				mainScreenArea.add(selectButton, 1, 2);
+				
+				selectButton.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent event) {
+						//TODO: add to customer's order this table
+						//TODO: redirect to selecting dishes
+						
+					}
+				});
+				
+				
+				
+			}
+		});
         //logOutButton
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				logoutConfirmation(stage);
+				logoutConfirmation(stage);	
 				
 			}
 		});
         //reviewUsButton
-        
+        reviewUsButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				mainScreenArea.getChildren().clear();
+				Label header = new Label("Review us");
+				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+			
+				Label addComment = new Label("Please add any comments about our service.");
+				TextField comment = new TextField();
+				comment.setPrefSize(200, 200);
+				Button done = new Button("Done");
+				
+				mainScreenArea.add(header, 0, 0);
+				mainScreenArea.add(addComment, 0, 1);
+				mainScreenArea.add(comment, 0, 2);
+				mainScreenArea.add(done, 0, 3);
+				
+				done.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent event) {
+						restaurant.getReviews().getReviews().add(comment.getText());
+						mainScreenArea.getChildren().clear();
+						Label header = new Label("Thank You!");
+						header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+						mainScreenArea.add(header, 0, 0);
+						
+					}
+				});
+				
+			}
+		});
         
         
         Scene scene = new Scene(border, 700, 500);
@@ -460,6 +527,7 @@ private static void logoutConfirmation(Stage currentStage) {
 	
 	public static void showManager(Manager manager, Stage stage) throws FileNotFoundException {
 		
+		stage.setTitle("Dashboard");
 		BorderPane border = new BorderPane();
 		Accordion accordion = new Accordion();
 		border.setLeft(accordion);
@@ -565,6 +633,8 @@ private static void logoutConfirmation(Stage currentStage) {
 	
 	public static void showCook(Cook cook, Stage stage) throws FileNotFoundException {
 
+		
+		stage.setTitle("Dashboard");
 		BorderPane border = new BorderPane();
 		Accordion accordion = new Accordion();
 		border.setLeft(accordion);
@@ -660,6 +730,8 @@ private static void logoutConfirmation(Stage currentStage) {
 	}
 	
 	public static void showWaiter(Waiter waiter, Stage stage) throws FileNotFoundException {
+		
+		stage.setTitle("Dashboard");
 		BorderPane border = new BorderPane();
 		Accordion accordion = new Accordion();
 		border.setLeft(accordion);

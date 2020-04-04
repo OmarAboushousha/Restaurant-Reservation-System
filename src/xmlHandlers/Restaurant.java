@@ -7,7 +7,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import restaurant.food.Dish;
+import restaurant.table.Table;
 import restaurantReservationSystem.Person;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "restaurant")
@@ -22,6 +25,17 @@ public class Restaurant {
 	@XmlElement(name = "dishes")
 	private Dishes dishes;
 	
+	@XmlElement(name = "reviews")
+	private Review reviews;
+	
+	public Review getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(Review reviews) {
+		this.reviews = reviews;
+	}
+
 	List<Person> persons;
 	List<Dish> menu;
 
@@ -65,5 +79,15 @@ public class Restaurant {
 		this.menu = menu;
 	}
 	
+	
+	public ObservableList<Table> retrieveAvailableTables() {
+		ObservableList<Table> list = FXCollections.observableArrayList();
+		for(int i = 0; i < tables.getTables().size(); i++) {
+			if(tables.getTables().get(i).isAvailable()) {
+				list.add(tables.getTables().get(i));
+			}
+		}
+		return list;
+	}
 
 }
