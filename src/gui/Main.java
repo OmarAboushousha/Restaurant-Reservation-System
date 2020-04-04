@@ -45,7 +45,9 @@ public class Main extends Application {
 	}
 	@Override
 	public void start(Stage loginScreen) throws Exception {
-		try {
+		Dashboard.showWaiter(new Waiter("ahmed", "js", "eje"), loginScreen);
+		/*try {
+			
 			Restaurant restaurant = XMLFileHandler.LoadFile("Data.xml");
 
 			loginScreen.setTitle("Login");
@@ -157,7 +159,7 @@ public class Main extends Application {
 				
 		} catch (JAXBException e) {
 			FileLoadError.display();
-		}
+		}*/
 		
 	}
 
