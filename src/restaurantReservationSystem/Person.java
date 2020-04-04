@@ -1,5 +1,6 @@
 package restaurantReservationSystem;
 
+import gui.Main;
 import xmlHandlers.Restaurant;
 import xmlHandlers.User;
 
@@ -37,6 +38,10 @@ public abstract class Person extends User {
 		this.name = name;
 		this.username = username;
 		this.password = password;
+	}
+	
+	public Person() {
+		super();
 	}
 
 	public static Person login(String usernameInput, String passwordInput, Restaurant restaurant)

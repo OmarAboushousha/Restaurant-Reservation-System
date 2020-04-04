@@ -3,7 +3,10 @@ package gui;
 import javax.xml.bind.JAXBException;
 
 import customers.Customer;
+import employees.Cook;
 import employees.Employee;
+import employees.Manager;
+import employees.Waiter;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,8 +41,7 @@ import xmlHandlers.XMLFileHandler;
 public class Main extends Application {
 
 	public static void main(String[] args) {
-		launch(args);
-		
+		launch(args);	
 	}
 	@Override
 	public void start(Stage loginScreen) throws Exception {
@@ -89,19 +91,43 @@ public class Main extends Application {
 						if(staffUser.isSelected()) {
 							if (person instanceof Employee) {
 								//TODO: redirect to staff type dashboard
+								if(person instanceof Manager) {
+									Manager manager = new Manager(person.getName(),
+											person.getUsername(), person.getPassword());
+									Dashboard.showManager(manager, loginScreen);
+									loginScreen.setTitle("Manager Dashboard");
+																	
+								}
+								if(person instanceof Waiter) {
+									Waiter waiter = new Waiter(person.getName(), person.getUsername(),
+											person.getPassword());
+									Dashboard.showWaiter(waiter, loginScreen);
+									loginScreen.setTitle("Waiter Dashboard");
+									
+								}
+								if(person instanceof Cook) {
+									Cook cook = new Cook(person.getName(), person.getUsername(),
+											person.getPassword());
+									Dashboard.showCook(cook, loginScreen);
+									loginScreen.setTitle("Cook Dashboard");
+									
+									
+								}
 							}
 							else LoginError.display("Please choose correct type of user.");
 						}
 						else if (customerUser.isSelected()) {
 							if (person instanceof Customer) {
 								//TODO: redirect to customer dashboard
+								Customer customer = new Customer(person.getName(),
+										person.getUsername(), person.getPassword());
+								Dashboard.showCustomer(customer, loginScreen);
+								loginScreen.setTitle("Customer Dashboard");
 							}
 							else LoginError.display("Please choose correct type of user.");
 						} else LoginError.display("Please choose correct type of user.");
-						
 					}
 				}
-				
 			});
 			
 			GridPane grid = new GridPane();
