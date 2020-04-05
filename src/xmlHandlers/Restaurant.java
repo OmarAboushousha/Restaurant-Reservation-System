@@ -139,11 +139,11 @@ public class Restaurant {
 		return list;
 	}
 	
-	/*public ObservableList<Order> retrieveOrders() {
+	public ObservableList<Order> retrieveOrders() {
 		ObservableList<Order> list = FXCollections.observableArrayList();
 		for(int i = 0; i < reservations.getOrders().size(); i++) {
 			list.add(reservations.getOrders().get(i));
 		}
 		return list;
-	}*/
+	}
 }

@@ -1,8 +1,8 @@
 package gui;
 
-import java.awt.Scrollbar;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -223,12 +223,9 @@ public class Dashboard {
 			@Override
 			public void handle(ActionEvent arg0) {
 				person.setName(textField.getText());
-				editWindow.close();
-				
+				editWindow.close();		
 			}
-		});
-	
-		
+		});	
 		vbox.setAlignment(Pos.BASELINE_CENTER);
 		
 		Scene scene = new Scene(vbox, 450, 250);
@@ -257,18 +254,12 @@ public class Dashboard {
 				
 			}
 		});
-	
-		
 		vbox.setAlignment(Pos.BASELINE_CENTER);
 		
 		Scene scene = new Scene(vbox, 450, 250);
 		editWindow.setScene(scene);
-		editWindow.showAndWait();
-		
-		
+		editWindow.showAndWait();	
 	}
-
-
 
 	private static void editPasswordField(Person person) {
 	
@@ -444,13 +435,7 @@ public class Dashboard {
 				}
 					
 				else checkOut(customer, order, restaurant, mainScreenArea,
-							appetizersSelection, mainCourseSelection, dessertSelection, drinksSelection);
-				
-					 
-					 
-				
-					
-				
+							appetizersSelection, mainCourseSelection, dessertSelection, drinksSelection);		
 			}
 		});
 		
@@ -558,7 +543,8 @@ public class Dashboard {
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         
         tableView.setItems(customerSelection);
-        tableView.getColumns().addAll(nameColumn, priceColumn);
+        tableView.getColumns().add(nameColumn);
+        tableView.getColumns().add(priceColumn);
         
         Button checkOuButton = new Button ("Checkout");
         
@@ -598,12 +584,10 @@ public class Dashboard {
 				}
 				else {
 					AlertBox.display("Please enter method of payment");
-				}
-				
+				}		
 			}
 		});
-		
-        
+		      
         mainScreenArea.add(header, 0, 0);
         mainScreenArea.add(tableNum, 0, 1);
         mainScreenArea.add(orderDateAndTime, 0, 2);
@@ -618,8 +602,6 @@ public class Dashboard {
         
 	}
 	
-
-
 	public static void showCustomer(Customer customer, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 		
 		//Layout
@@ -676,8 +658,7 @@ public class Dashboard {
 		//Main Screen Area
 		Label name = new Label("Welcome " + customer.getName() + "!");
 		name.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-
-		
+	
 		GridPane mainScreenArea = new GridPane();
 		border.setCenter(mainScreenArea);
 		mainScreenArea.setPadding(new Insets(10, 10, 10, 10));
@@ -719,25 +700,22 @@ public class Dashboard {
 				
 		        mainScreenArea.add(header, 0, 0);
 		        
-		        try {
-		        
-
-		       
-				TableView<Dish> table = new TableView<>();
-				
-				TableColumn<Dish, String> dishName = new TableColumn<>("Dish");
-				dishName.setMinWidth(200);
-				dishName.setCellValueFactory(new PropertyValueFactory<>("name"));
-				
-				TableColumn<Dish, Double> dishPrice = new TableColumn<>("Price");
-				dishPrice.setMinWidth(100);
-				dishPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-				
-				table.setItems(customer.getCurrentOrder().retrieveDishes());
-				table.getColumns().add(dishName);
-				table.getColumns().add(dishPrice);
-				
-				mainScreenArea.add(table, 0, 1);	
+		        try {          
+					TableView<Dish> table = new TableView<>();
+					
+					TableColumn<Dish, String> dishName = new TableColumn<>("Dish");
+					dishName.setMinWidth(200);
+					dishName.setCellValueFactory(new PropertyValueFactory<>("name"));
+					
+					TableColumn<Dish, Double> dishPrice = new TableColumn<>("Price");
+					dishPrice.setMinWidth(100);
+					dishPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+					
+					table.setItems(customer.getCurrentOrder().retrieveDishes());
+					table.getColumns().add(dishName);
+					table.getColumns().add(dishPrice);
+					
+					mainScreenArea.add(table, 0, 1);	
 		        } catch (NullPointerException e) {
 		        	mainScreenArea.add(new Label("You have no recent orders"), 0, 1);
 		        }
@@ -792,46 +770,36 @@ public class Dashboard {
 				}
 				else {
 				
-				selectButton.setOnAction(new EventHandler<ActionEvent>() {
-
-					@Override
-					public void handle(ActionEvent event) {
-						//TODO: add to customer's order this table
-						try {
-							
-							Time time = new Time(Integer.parseInt(hourTxt.getText()),Integer.parseInt(minTxt.getText().toString()));
-							if(availableTables.getValue() != null && time.getHour() != 0 && time.getMinute() != 0 && datePicker.getValue() != null) {
+					selectButton.setOnAction(new EventHandler<ActionEvent>() {
+	
+						@Override
+						public void handle(ActionEvent event) {
+							//TODO: add to customer's order this table
+							try {
 								
-								order.setDate(datePicker.getValue());
-								order.setTime(time);
-								order.setTable(availableTables.getValue());
-								order.getTable().setAvailable(false);
-								//TODO: redirect to selecting dishes
-								viewCustomerMenu(order, mainScreenArea, restaurant, customer);
-								
-								//TODO: redirect to selecting dishes
-								
-							} else {
-								message.setText("Please fill in all information correctly");
+								Time time = new Time(Integer.parseInt(hourTxt.getText()),Integer.parseInt(minTxt.getText().toString()));
+								if(availableTables.getValue() != null && time.getHour() != 0 && time.getMinute() != 0 && datePicker.getValue() != null) {
+									
+									order.setDate(datePicker.getValue());
+									order.setTime(time);
+									order.setTable(availableTables.getValue());
+									order.getTable().setAvailable(false);
+									
+									viewCustomerMenu(order, mainScreenArea, restaurant, customer);		
+								}
+								else {
+									message.setText("Please fill in all information correctly");
+									message.setTextFill(Color.web("#ff0000", 0.8));
+								}
+							} catch(NumberFormatException e) {
+								message.setText("Please choose a valid time");
 								message.setTextFill(Color.web("#ff0000", 0.8));
 							}
-						} catch(NumberFormatException e) {
-							message.setText("Please choose a valid time");
-							message.setTextFill(Color.web("#ff0000", 0.8));
 						}
-						
-						
-						
-
-						
-						
-						
-					}
-				});
-				
+					});
 				}
-				}
-			});	
+			}
+		});	
 
         //logOutButton
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -872,12 +840,10 @@ public class Dashboard {
 						mainScreenArea.add(header, 0, 0);
 						
 					}
-				});
-				
+				});		
 			}
 		});
-        
-        
+          
         Scene scene = new Scene(border, 700, 500);
         
         stage.setScene(scene);
@@ -886,7 +852,7 @@ public class Dashboard {
 	
 	
 	
-	public static void showManager(Manager manager, Stage stage, Restaurant restaurant) throws FileNotFoundException {
+	public static void showManager(Manager manager, Stage stage, Restaurant restaurant, Reservation reservation) throws FileNotFoundException {
 		
 		stage.setTitle("Dashboard");
 		BorderPane border = new BorderPane();
@@ -911,10 +877,10 @@ public class Dashboard {
 		GridPane orderGrid = new GridPane();
 		orderGrid.setVgap(4);
 		orderGrid.setPadding(new Insets(5, 5, 5, 5));
-		Button viewOrdersButton = new Button("View orders");
-		Button editMenuButton = new Button("Edit Menu");
-		orderGrid.add(viewOrdersButton, 0, 0);
-		orderGrid.add(editMenuButton, 0, 1);
+		Button viewDetailsButton = new Button("View details");
+		//Button editMenuButton = new Button("Edit Menu");
+		orderGrid.add(viewDetailsButton, 0, 0);
+		//orderGrid.add(editMenuButton, 0, 1);
 		orderPane.setContent(orderGrid);
 		
 		TitledPane statPane = new TitledPane();
@@ -960,6 +926,71 @@ public class Dashboard {
         GridPane.setHalignment(logOutButton, HPos.RIGHT);
         
         //buttons functionality
+        viewDetailsButton.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	@Override
+			public void handle(ActionEvent event) {
+        		
+				mainScreenArea.getChildren().clear();
+
+				String date = "Date\n\n"; 
+        		String time = "Time\n\n";
+        		String number = "Table Number\n\n";
+        		String name = "Customer Name\n\n";
+        		String dishes = "Ordered Dishes\n\n";
+        		String price = "Total Price\n\n";
+        		int x = 0;
+
+       			for(int i = 0; i < reservation.getOrders().size(); i++) {
+       				date = date.concat(reservation.getOrders().get(i).getDate() + "\n\n");
+       				time = time.concat(reservation.getOrders().get(i).getTime() + "\n\n");
+       				number = number.concat(reservation.getOrders().get(i).getTable().getTableNumber() + "\n\n");
+       				name = name.concat(reservation.getOrders().get(i).getCustomer().getName() + "\n\n");
+       				for(int j = 0; j < reservation.getOrders().get(x).getDishes().size(); j++) {
+       					dishes = dishes.concat(reservation.getOrders().get(x).getDishes().get(j) + "\n");
+       				}
+       				x++;
+       				dishes.concat("\n");
+       				price = price.concat(reservation.getOrders().get(i).getPrice() + "\n\n");
+       				
+       			}
+       			Label header = new Label("Today's reservations:");
+				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+       			
+        		Label info1 = new Label(date);
+        		info1.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		
+        		Label info2 = new Label(time);
+        		info2.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		
+        		Label info3 = new Label(number);
+        		info3.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		
+        		Label info4 = new Label(name);
+        		info4.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		
+        		Label info5 = new Label(dishes);
+        		info5.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		
+        		Label info6 = new Label(price);
+        		info6.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		
+        		/*ScrollBar scrollBar = new ScrollBar();
+        		scrollBar.setMin(500);
+        		scrollBar.setValue(0);
+        		scrollBar.setMax(500);*/
+        		
+        		mainScreenArea.add(header, 0, 0);
+				mainScreenArea.add(info1, 0, 1);
+				mainScreenArea.add(info2, 1, 1);
+				mainScreenArea.add(info3, 2, 1);
+				mainScreenArea.add(info4, 3, 1);
+				mainScreenArea.add(info5, 4, 1);
+				mainScreenArea.add(info6, 5, 1);
+				//mainScreenArea.add(scrollBar, 0, 20);
+			}
+		});
+        
         viewProfileButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -993,7 +1024,7 @@ public class Dashboard {
         stage.show();
 	}
 	
-	public static void showCook(Cook cook, Stage stage, Restaurant restaurant) throws FileNotFoundException {
+	public static void showCook(Cook cook, Stage stage, Restaurant restaurant, Reservation reservation) throws FileNotFoundException {
 
 		
 		stage.setTitle("Dashboard");
@@ -1072,18 +1103,7 @@ public class Dashboard {
         	@Override
        		public void handle(ActionEvent event) {
         		
-        		Order order1 = new Order();
-        		order1.setTable(restaurant.getTables().getTables().get(0));
-        		order1.setDishes(restaurant.getMenu());
-        		Order order2 = new Order();
-        		order2.setTable(restaurant.getTables().getTables().get(1));
-        		order2.setDishes(restaurant.getMenu());
-        		List<Order> orders = new ArrayList<>();
-        		orders.add(order1);
-        		orders.add(order2);
-        		Reservation reservation = new Reservation();
-        		reservation.setOrders(orders);
-        		restaurant.setReservations(reservation);
+				mainScreenArea.getChildren().clear();
         		
        			String string = "";
        			int x = 0;
@@ -1097,7 +1117,8 @@ public class Dashboard {
         			}
         			x++;
        			}
-       			name.setText("Today's orders:");
+       			Label header = new Label("Today's orders:");
+				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
        			
         		Label info = new Label(string);
         		info.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
@@ -1106,6 +1127,7 @@ public class Dashboard {
         		scrollPane.setPrefWidth(200);
         		scrollPane.setContent(info);
 				
+        		mainScreenArea.add(header, 0, 0);
 				mainScreenArea.add(info, 0, 1);
 				mainScreenArea.add(scrollPane, 0, 1);
        		}
@@ -1143,7 +1165,7 @@ public class Dashboard {
         stage.show();
 	}
 	
-	public static void showWaiter(Waiter waiter, Stage stage, Restaurant restaurant) throws FileNotFoundException {
+	public static void showWaiter(Waiter waiter, Stage stage, Restaurant restaurant, Reservation reservation) throws FileNotFoundException {
 		
 		stage.setTitle("Dashboard");
 		BorderPane border = new BorderPane();
@@ -1203,6 +1225,67 @@ public class Dashboard {
         GridPane.setHalignment(logOutButton, HPos.RIGHT);
         
       //buttons functionality
+        viewOrdersButton.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	@Override
+       		public void handle(ActionEvent event) {
+        		
+        		mainScreenArea.getChildren().clear();
+        		
+        		/*Order order1 = new Order();
+        		Order order2 = new Order();
+        		Customer customer1 = new Customer();
+        		Customer customer2 = new Customer();
+        		Time time1 = new Time(12, 30);
+        		Time time2 = new Time(3, 15);
+        		customer1.setName("Ahmed");
+        		customer2.setName("Mohamed");
+        		order1.setTable(restaurant.getTables().getTables().get(0));
+        		order2.setTable(restaurant.getTables().getTables().get(1));
+        		order1.setCustomer(customer1);
+        		order2.setCustomer(customer2);
+        		order1.setTime(time1);
+        		order2.setTime(time2);
+        		List<Order> orders = new ArrayList<>();
+        		orders.add(order1);
+        		orders.add(order2);
+        		reservation.setOrders(orders);*/
+        		
+        		String date = "Date\n\n";
+        		String time = "Time\n\n";
+        		String number = "Table Number\n\n";
+        		String name = "Customer Name\n\n";
+
+       			for(int i = 0; i < reservation.getOrders().size(); i++) {
+       				date = date.concat(reservation.getOrders().get(i).getDate() + "\n");
+       				time = time.concat(reservation.getOrders().get(i).getTime() + "\n");
+       				number = number.concat(reservation.getOrders().get(i).getTable().getTableNumber() + "\n");
+       				name = name.concat(reservation.getOrders().get(i).getCustomer().getName() + "\n");
+       			}
+       			Label header = new Label("Today's reservations:");
+				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+       			
+        		Label info1 = new Label(date);
+        		info1.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		
+        		Label info2 = new Label(time);
+        		info2.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		
+        		Label info3 = new Label(number);
+        		info3.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		
+        		Label info4 = new Label(name);
+        		info4.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		
+        		mainScreenArea.add(header, 0, 0);
+				mainScreenArea.add(info1, 0, 1);
+				mainScreenArea.add(info2, 1, 1);
+				mainScreenArea.add(info3, 2, 1);
+				mainScreenArea.add(info4, 3, 1);
+       		}       	
+		});
+        
+        
         viewProfileButton.setOnAction(new EventHandler<ActionEvent>() {
        			
        		@Override

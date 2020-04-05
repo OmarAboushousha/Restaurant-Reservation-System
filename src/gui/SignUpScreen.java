@@ -128,7 +128,7 @@ public class SignUpScreen {
 						Manager manager = (Manager) person;
 						restaurant.getPersons().add(manager);
 						try {
-							Dashboard.showManager(manager, signUpStage, restaurant);
+							Dashboard.showManager(manager, signUpStage, restaurant, restaurant.getReservations());
 						} catch (FileNotFoundException e) {
 							// TODO Auto-generated catch block
 							AlertBox.display("Unexpected Error!");
@@ -137,7 +137,7 @@ public class SignUpScreen {
 						Cook cook = (Cook) person;
 						restaurant.getPersons().add(cook);
 						try {
-							Dashboard.showCook(cook, signUpStage, restaurant);
+							Dashboard.showCook(cook, signUpStage, restaurant, restaurant.getReservations());
 						} catch (FileNotFoundException e) {
 							// TODO Auto-generated catch block
 							AlertBox.display("Unexpected Error!");
@@ -146,7 +146,7 @@ public class SignUpScreen {
 						Waiter waiter = (Waiter) person;
 						restaurant.getPersons().add(waiter);
 						try {
-							Dashboard.showWaiter(waiter, signUpStage, restaurant);
+							Dashboard.showWaiter(waiter, signUpStage, restaurant, restaurant.getReservations());
 						} catch (FileNotFoundException e) {
 							// TODO Auto-generated catch block
 							AlertBox.display("Unexpected Error!");
