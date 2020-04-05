@@ -15,8 +15,13 @@ public class Order {
 	private List<Dish> dishes = new ArrayList<>();
 	private Customer customer;
 	private float price;
+<<<<<<< HEAD
 	private LocalDate date;
 	private  Time time;
+=======
+	private Date date;
+	private Time time;
+>>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
 	private boolean paid;
 	private int orderNumber;
 	

@@ -42,12 +42,21 @@ import xmlHandlers.XMLFileHandler;
 
 public class LoginScreen {
 	public static void loginScreen(Stage loginScreen) {
+<<<<<<< HEAD
 //		try {
 //			Dashboard.showCustomer(new Customer("ahmed", "js", "eje"), loginScreen, restaurant);
 //		} catch (FileNotFoundException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+=======
+		/*try {
+			Dashboard.showCustomer(new Customer("ahmed", "js", "eje"), loginScreen, restaurant);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+>>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
 		try {
 			
 			Restaurant restaurant = XMLFileHandler.LoadFile("Data.xml");

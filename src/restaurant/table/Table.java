@@ -70,11 +70,15 @@ public class Table {
 		
 	}
 	
+<<<<<<< HEAD
+=======
+	//public stat void 
+>>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
 	@Override
 	public String toString() {
 		if (isSmoking())
-			return String.valueOf(tableNumber) + "\t" +  "smoking";
-		return String.valueOf(tableNumber) + "\t" +  "non-smoking";
+			return String.valueOf(tableNumber) + "\t" +  "smoking, " + String.valueOf(numberOfSeats) + " seats";
+		return String.valueOf(tableNumber) + "\t" +  "non-smoking, " + String.valueOf(numberOfSeats) + " seats";
 	}
 	
 }

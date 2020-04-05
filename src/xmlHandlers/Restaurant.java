@@ -9,8 +9,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+<<<<<<< HEAD
 import restaurant.food.Appetizers;
 import restaurant.food.Dessert;
+=======
+import restaurant.Order;
+>>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
 import restaurant.food.Dish;
 import restaurant.food.MainCourse;
 import restaurant.table.Table;
@@ -30,6 +34,9 @@ public class Restaurant {
 	
 	@XmlElement(name = "reviews")
 	private Review reviews;
+	
+	@XmlElement(name = "reservations")
+	private Reservation reservations;
 	
 	public Review getReviews() {
 		return reviews;
@@ -118,4 +125,19 @@ public class Restaurant {
 		return list;
 	}
 
+	public ObservableList<Dish> retrieveDishes() {
+		ObservableList<Dish> list = FXCollections.observableArrayList();
+		for(int i = 0; i < dishes.getDishes().size(); i++) {
+			list.add(menu.get(i));
+		}
+		return list;
+	}
+	
+	public ObservableList<Order> retrieveOrders() {
+		ObservableList<Order> list = FXCollections.observableArrayList();
+		for(int i = 0; i < reservations.getOrders().size(); i++) {
+			list.add(reservations.getOrders().get(i));
+		}
+		return list;
+	}
 }

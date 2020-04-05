@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import customers.Customer;
 import employees.Cook;
 import employees.Manager;
@@ -19,8 +21,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+<<<<<<< HEAD
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+=======
+import javafx.scene.control.ComboBox; 
+import javafx.scene.control.Button;
+>>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
@@ -47,14 +54,24 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import restaurant.Order;
+<<<<<<< HEAD
 import restaurant.food.Appetizers;
 import restaurant.food.Dish;
 import restaurant.food.MainCourse;
+=======
+import restaurant.food.Dish;
+>>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
 import restaurant.table.Table;
 import restaurantReservationSystem.Person;
+<<<<<<< HEAD
 import restaurantReservationSystem.Time;
 import xmlHandlers.DishX;
 import xmlHandlers.Restaurant;
+=======
+import xmlHandlers.DishX;
+import xmlHandlers.Restaurant;
+import xmlHandlers.XMLFileHandler;
+>>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
 
 public class Dashboard {
 	
@@ -89,6 +106,7 @@ public class Dashboard {
 	}
 	
 	private static void showSettings(Person person, GridPane mainScreenArea) {
+		
 		Label header = new Label("Settings");
 		header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		String passIcon = "";
@@ -190,7 +208,7 @@ public class Dashboard {
 		
 	}
 	
-private static void editUserNameField(Person person) {
+	private static void editUserNameField(Person person) {
 		
 		Stage editWindow = new Stage();
 		editWindow.initModality(Modality.APPLICATION_MODAL);
@@ -221,109 +239,109 @@ private static void editUserNameField(Person person) {
 		
 	}
 
-private static void editPasswordField(Person person) {
+	private static void editPasswordField(Person person) {
 	
-	Stage editWindow = new Stage();
-	editWindow.initModality(Modality.APPLICATION_MODAL);
-	editWindow.setTitle("Edit Password");
-	GridPane grid = new GridPane();
-	grid.setVgap(5);
-	grid.setHgap(5);
-	grid.setPadding(new Insets(10, 10, 10, 10));
+		Stage editWindow = new Stage();
+		editWindow.initModality(Modality.APPLICATION_MODAL);
+		editWindow.setTitle("Edit Password");
+		GridPane grid = new GridPane();
+		grid.setVgap(5);
+		grid.setHgap(5);
+		grid.setPadding(new Insets(10, 10, 10, 10));
+		
+		Label labelOld = new Label("Enter old password:");
+		Label labelNew = new Label("Enter new password: ");
+		Label labelCheck = new Label("Enter new password again: ");
+		PasswordField oldPass = new PasswordField();
+		PasswordField newPass = new PasswordField();
+		PasswordField checkPass = new PasswordField();
+		Button done = new Button("Done");
+		
+		Label message = new Label();
+		
+		grid.add(labelOld, 0, 0);
+		grid.add(labelNew, 0, 1);
+		grid.add(labelCheck, 0, 2);
+		
+		grid.add(oldPass, 1, 0);
+		grid.add(newPass, 1, 1);
+		grid.add(checkPass, 1, 2);
+		
+		grid.add(message, 0, 3, 2, 1);
+		
+		grid.add(done, 0, 4, 2, 1);
+		GridPane.setHalignment(done, HPos.CENTER);
+		GridPane.setHalignment(message, HPos.CENTER);
+		
+		done.setOnAction(new EventHandler<ActionEvent>() {
 	
-	Label labelOld = new Label("Enter old password:");
-	Label labelNew = new Label("Enter new password: ");
-	Label labelCheck = new Label("Enter new password again: ");
-	PasswordField oldPass = new PasswordField();
-	PasswordField newPass = new PasswordField();
-	PasswordField checkPass = new PasswordField();
-	Button done = new Button("Done");
-	
-	Label message = new Label();
-	
-	grid.add(labelOld, 0, 0);
-	grid.add(labelNew, 0, 1);
-	grid.add(labelCheck, 0, 2);
-	
-	grid.add(oldPass, 1, 0);
-	grid.add(newPass, 1, 1);
-	grid.add(checkPass, 1, 2);
-	
-	grid.add(message, 0, 3, 2, 1);
-	
-	grid.add(done, 0, 4, 2, 1);
-	GridPane.setHalignment(done, HPos.CENTER);
-	GridPane.setHalignment(message, HPos.CENTER);
-	
-	done.setOnAction(new EventHandler<ActionEvent>() {
-
-		@Override
-		public void handle(ActionEvent event) {
-			if (!oldPass.getText().equals(person.getPassword())) {
-				message.setText("Password Incorrect!");
-				message.setTextFill(Color.web("#ff0000", 0.8));
-			} else if (!newPass.getText().equals(checkPass.getText())) {
-				message.setText("Passwords don't match!");
-				message.setTextFill(Color.web("#ff0000", 0.8));
-			} else {
-				person.setPassword(newPass.getText());
-				editWindow.close();
+			@Override
+			public void handle(ActionEvent event) {
+				if (!oldPass.getText().equals(person.getPassword())) {
+					message.setText("Password Incorrect!");
+					message.setTextFill(Color.web("#ff0000", 0.8));
+				} else if (!newPass.getText().equals(checkPass.getText())) {
+					message.setText("Passwords don't match!");
+					message.setTextFill(Color.web("#ff0000", 0.8));
+				} else {
+					person.setPassword(newPass.getText());
+					editWindow.close();
+				}
+				
 			}
+		});
+		
+		Scene scene = new Scene(grid, 450, 250);
+		editWindow.setScene(scene);
+		editWindow.showAndWait();
+	}
+	private static void logoutConfirmation(Stage currentStage) {
+		
+		Stage logoutConfirm = new Stage();
+		logoutConfirm.initModality(Modality.APPLICATION_MODAL);
+		logoutConfirm.setTitle("Confirm");
+		
+		Label label = new Label("Are you sure you wish to log out?");
+	    Button yes = new Button("Yes");
+	    Button no = new Button("No");
+	    yes.setOnAction(new EventHandler<ActionEvent>() {
 			
-		}
-	});
-	
-	Scene scene = new Scene(grid, 450, 250);
-	editWindow.setScene(scene);
-	editWindow.showAndWait();
-	
-	
-}
-private static void logoutConfirmation(Stage currentStage) {
-	Stage logoutConfirm = new Stage();
-	logoutConfirm.initModality(Modality.APPLICATION_MODAL);
-	logoutConfirm.setTitle("Confirm");
-	
-	Label label = new Label("Are you sure you wish to log out?");
-    Button yes = new Button("Yes");
-    Button no = new Button("No");
-   yes.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				LoginScreen.loginScreen(new Stage());
+				currentStage.close();
+				logoutConfirm.close();
+			}
 		
-		@Override
-		public void handle(ActionEvent arg0) {
-			LoginScreen.loginScreen(new Stage());
-			currentStage.close();
-			logoutConfirm.close();
-		}
+		});
+	   
+	   no.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				logoutConfirm.close();
+			}
+	   });
+	    
+	    GridPane grid = new GridPane();
+	    grid.setVgap(10);
+	    grid.setHgap(10);
+	    grid.setPadding(new Insets(100, 100, 100, 125));
+	    grid.add(label, 0, 0, 2, 1);
+	    grid.add(yes, 0, 1);
+	    grid.add(no, 1, 1);
+	    
+	    GridPane.setHalignment(label, HPos.CENTER);
+	    GridPane.setHalignment(yes, HPos.LEFT);
+	    GridPane.setHalignment(no, HPos.RIGHT);
 	
-	});
-   
-   no.setOnAction(new EventHandler<ActionEvent>() {
 		
-		@Override
-		public void handle(ActionEvent arg0) {
-			logoutConfirm.close();
-		}
-   });
-    
-    GridPane grid = new GridPane();
-    grid.setVgap(10);
-    grid.setHgap(10);
-    grid.setPadding(new Insets(100, 100, 100, 125));
-    grid.add(label, 0, 0, 2, 1);
-    grid.add(yes, 0, 1);
-    grid.add(no, 1, 1);
-    
-    GridPane.setHalignment(label, HPos.CENTER);
-    GridPane.setHalignment(yes, HPos.LEFT);
-    GridPane.setHalignment(no, HPos.RIGHT);
-
-	
-	Scene scene = new Scene(grid, 450, 250);
-	logoutConfirm.setScene(scene);
-	logoutConfirm.showAndWait();
+		Scene scene = new Scene(grid, 450, 250);
+		logoutConfirm.setScene(scene);
+		logoutConfirm.showAndWait();
 	}
 
+<<<<<<< HEAD
 
 	private static void viewCustomerMenu(Order order, GridPane mainScreenArea, Restaurant restaurant, Customer customer) {
 		
@@ -549,6 +567,8 @@ private static void logoutConfirmation(Stage currentStage) {
 		return false;
 	}
 
+=======
+>>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
 	public static void showCustomer(Customer customer, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 		
 		//Layout
@@ -648,19 +668,31 @@ private static void logoutConfirmation(Stage currentStage) {
 				
 		        mainScreenArea.add(header, 0, 0);
 		        
-		        int column = 1;
-				Label[] info = new Label[20];
-
-				for(int counter = 0; counter < customer.getCurrentOrder().getDishes().size(); counter++) {
-					info[counter].setText(customer.getCurrentOrder().getDishes().get(counter).getName() +
-							"\t" + customer.getCurrentOrder().getDishes().get(counter).getPrice());
-					info[counter].setFont(Font.font("Monaco", FontWeight.NORMAL, 10));
-					mainScreenArea.add(info[counter], 0, column);
-					column++;
-				}			
+		        Order order = new Order();
+				order.setDishes(restaurant.getMenu());
+				customer.setCurrentOrder(order);
+		        
+				TableView<Dish> table = new TableView<>();
+				
+				TableColumn<Dish, String> dishName = new TableColumn<>("Dish");
+				dishName.setMinWidth(200);
+				dishName.setCellValueFactory(new PropertyValueFactory<>("name"));
+				
+				TableColumn<Dish, Double> dishPrice = new TableColumn<>("Price");
+				dishPrice.setMinWidth(100);
+				dishPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+				
+				table.setItems(restaurant.retrieveDishes());
+				table.getColumns().add(dishName);
+				table.getColumns().add(dishPrice);
+				
+				mainScreenArea.add(table, 0, 1);		
 			}
 		});
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
         //makeNewOrderButton
         makeNewOrderButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -736,6 +768,7 @@ private static void logoutConfirmation(Stage currentStage) {
 						
 						
 					}
+<<<<<<< HEAD
 				});
 				
 				}
@@ -743,6 +776,11 @@ private static void logoutConfirmation(Stage currentStage) {
 			}
 		});
 
+=======
+				});	
+			}
+		});
+>>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
         //logOutButton
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -775,7 +813,7 @@ private static void logoutConfirmation(Stage currentStage) {
 
 					@Override
 					public void handle(ActionEvent event) {
-						restaurant.getReviews().getReviews().add(comment.getText());
+						//restaurant.getReviews().getReviews().add(comment.getText());
 						mainScreenArea.getChildren().clear();
 						Label header = new Label("Thank You!");
 						header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -971,30 +1009,30 @@ private static void logoutConfirmation(Stage currentStage) {
       //buttons functionality
         viewProfileButton.setOnAction(new EventHandler<ActionEvent>() {
        			
-       			@Override
-       			public void handle(ActionEvent event) {
-       				showProfile(cook, mainScreenArea);
+       		@Override
+       		public void handle(ActionEvent event) {
+       			showProfile(cook, mainScreenArea);
        				
-       			}
-       		});
-               //settingsButton
-               settingsButton.setOnAction(new EventHandler<ActionEvent>() {
+       		}
+       	});
+        //settingsButton
+        settingsButton.setOnAction(new EventHandler<ActionEvent>() {
 
-       			@Override
-       			public void handle(ActionEvent event) {
-       				showSettings(cook, mainScreenArea);
+       		@Override
+       		public void handle(ActionEvent event) {
+       			showSettings(cook, mainScreenArea);
        				
-       			}
-               });
+       		}
+        });
                
-               logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
-       			@Override
-       			public void handle(ActionEvent event) {
-       				logoutConfirmation(stage);
+       		@Override
+       		public void handle(ActionEvent event) {
+       			logoutConfirmation(stage);
        				
-       			}
-               });
+       		}
+        });
         
         Scene scene = new Scene(border, 700, 500);
         
@@ -1064,35 +1102,34 @@ private static void logoutConfirmation(Stage currentStage) {
       //buttons functionality
         viewProfileButton.setOnAction(new EventHandler<ActionEvent>() {
        			
-       			@Override
-       			public void handle(ActionEvent event) {
-       				showProfile(waiter, mainScreenArea);
+       		@Override
+       		public void handle(ActionEvent event) {
+       			showProfile(waiter, mainScreenArea);
        				
-       			}
-       		});
-               //settingsButton
-               settingsButton.setOnAction(new EventHandler<ActionEvent>() {
+       		}
+       	});
+      //settingsButton
+        settingsButton.setOnAction(new EventHandler<ActionEvent>() {
 
-       			@Override
-       			public void handle(ActionEvent event) {
-       				showSettings(waiter, mainScreenArea);
+       		@Override
+       		public void handle(ActionEvent event) {
+       			showSettings(waiter, mainScreenArea);
        				
-       			}
-               });
+       		}
+        });
                
-               logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
-       			@Override
-       			public void handle(ActionEvent event) {
-       				logoutConfirmation(stage);
+       		@Override
+       		public void handle(ActionEvent event) {
+       			logoutConfirmation(stage);
        				
-       			}
-               });
+       		}
+        });
         
         Scene scene = new Scene(border, 700, 500);
         
         stage.setScene(scene);
         stage.show();
 	}
-	
 }
