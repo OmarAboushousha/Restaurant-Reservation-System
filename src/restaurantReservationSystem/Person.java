@@ -4,7 +4,7 @@ import gui.Main;
 import xmlHandlers.Restaurant;
 import xmlHandlers.User;
 
-public abstract class Person extends User {
+public abstract class Person {
 	
 	private String name;
 	private String username;
@@ -53,4 +53,5 @@ public abstract class Person extends User {
 		}
 		return null;
 	}
+	
 }

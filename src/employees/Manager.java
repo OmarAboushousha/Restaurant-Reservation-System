@@ -34,11 +34,7 @@ public class Manager extends Employee {
 		return day;
 	}*/
 
-	@Override
-	public Order seeOrder(int orderNumber) {
-		// TODO: Manager is allowed to view full details of orders today
-		return null;
-	}
+	
 	
 	@Override
 	public String toString() {

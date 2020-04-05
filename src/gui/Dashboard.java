@@ -3,6 +3,7 @@ package gui;
 import java.awt.Scrollbar;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -223,6 +224,7 @@ public class Dashboard {
 			@Override
 			public void handle(ActionEvent arg0) {
 				person.setName(textField.getText());
+				System.out.println(person.getName());
 				editWindow.close();
 				
 			}
@@ -622,6 +624,13 @@ public class Dashboard {
 
 	public static void showCustomer(Customer customer, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 		
+		
+		//loading last order for customer
+		for(Order order: restaurant.getReservations().getOrders()) {
+			if (order.getCustomer().getUsername().equals(customer.getUsername())) 
+				customer.setCurrentOrder(order);
+		}
+		
 		//Layout
 		
 		stage.setTitle("Dashboard");
@@ -737,7 +746,14 @@ public class Dashboard {
 				table.getColumns().add(dishName);
 				table.getColumns().add(dishPrice);
 				
-				mainScreenArea.add(table, 0, 1);	
+				mainScreenArea.add(table, 0, 1, 1, 5);
+				mainScreenArea.add(new Label("Date: " + customer.getCurrentOrder().getDate()), 1, 1);
+				mainScreenArea.add(new Label("Time: " + customer.getCurrentOrder().getTime()), 1, 2);
+				mainScreenArea.add(new Label("Table Number:" + customer.getCurrentOrder().getTable().getTableNumber()), 1, 3);
+				mainScreenArea.add(new Label("Price: " + customer.getCurrentOrder().getPrice()), 1, 4);
+				
+				
+				
 		        } catch (NullPointerException e) {
 		        	mainScreenArea.add(new Label("You have no recent orders"), 0, 1);
 		        }
@@ -802,7 +818,7 @@ public class Dashboard {
 							Time time = new Time(Integer.parseInt(hourTxt.getText()),Integer.parseInt(minTxt.getText().toString()));
 							if(availableTables.getValue() != null && time.getHour() != 0 && time.getMinute() != 0 && datePicker.getValue() != null) {
 								
-								order.setDate(datePicker.getValue());
+								order.setDate(datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 								order.setTime(time);
 								order.setTable(availableTables.getValue());
 								order.getTable().setAvailable(false);
@@ -812,7 +828,7 @@ public class Dashboard {
 								//TODO: redirect to selecting dishes
 								
 							} else {
-								message.setText("Please fill in all information correctly");
+								message.setText("Please fill in all\ninformation correctly");
 								message.setTextFill(Color.web("#ff0000", 0.8));
 							}
 						} catch(NumberFormatException e) {
@@ -877,6 +893,20 @@ public class Dashboard {
 			}
 		});
         
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					XMLFileHandler.saveFile(restaurant, "Data.xml");
+				} catch (JAXBException e) {
+					// TODO Auto-generated catch block
+					AlertBox.display("Error saving file!");
+					e.printStackTrace();
+				}
+				
+			}
+		});
         
         Scene scene = new Scene(border, 700, 500);
         
@@ -986,6 +1016,21 @@ public class Dashboard {
 				
 			}
         });
+        
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					XMLFileHandler.saveFile(restaurant, "Data.xml");
+				} catch (JAXBException e) {
+					// TODO Auto-generated catch block
+					AlertBox.display("Error saving file!");
+					e.printStackTrace();
+				}
+				
+			}
+		});
         
         Scene scene = new Scene(border, 700, 500);
         
@@ -1137,6 +1182,21 @@ public class Dashboard {
        		}
         });
         
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					XMLFileHandler.saveFile(restaurant, "Data.xml");
+				} catch (JAXBException e) {
+					// TODO Auto-generated catch block
+					AlertBox.display("Error saving file!");
+					e.printStackTrace();
+				}
+				
+			}
+		});
+        
         Scene scene = new Scene(border, 700, 500);
         
         stage.setScene(scene);
@@ -1235,6 +1295,21 @@ public class Dashboard {
        				
        		}
         });
+        
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					XMLFileHandler.saveFile(restaurant, "Data.xml");
+				} catch (JAXBException e) {
+					// TODO Auto-generated catch block
+					AlertBox.display("Error saving file!");
+					e.printStackTrace();
+				}
+				
+			}
+		});
         
         Scene scene = new Scene(border, 700, 500);
         

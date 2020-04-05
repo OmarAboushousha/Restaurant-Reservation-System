@@ -8,6 +8,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "dish")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DishX {
+	DishX() {}
+	public DishX(String name, double price, String type) {
+		this.name = name;
+		this.price = price;
+		this.type = type;
+	}
 
 	@XmlElement(name = "name")
 	private String name;

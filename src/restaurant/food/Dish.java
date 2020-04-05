@@ -1,9 +1,21 @@
 package restaurant.food;
 
-public abstract class Dish {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "dish")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Dish {
+
+	@XmlElement(name = "name")
 	private String name;
+	
+	@XmlElement(name = "price")
 	private double price;
+	
+	@XmlElement(name = "tax")
 	private double tax;
 	
 	public Dish() {

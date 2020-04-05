@@ -17,7 +17,7 @@ import restaurant.food.Dish;
 import restaurant.food.MainCourse;
 import restaurant.table.Table;
 import restaurantReservationSystem.Person;
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "restaurant")
 public class Restaurant {
 	
@@ -33,10 +33,12 @@ public class Restaurant {
 	@XmlElement(name = "reviews")
 	private Review reviews = new Review();
 	
-	//@XmlElement(name = "reservations")
+	@XmlElement(name = "reservations")
 	private Reservation reservations = new Reservation();
 	
-	//@XmlElement(name = "reviews")
+	List<Person> persons;
+	List<Dish> menu;
+	
 	public Review getReviews() {
 		return reviews;
 	}
@@ -45,8 +47,7 @@ public class Restaurant {
 		this.reviews = reviews;
 	}
 
-	List<Person> persons;
-	List<Dish> menu;
+	
 
 	public Users getUsers() {
 		return users;

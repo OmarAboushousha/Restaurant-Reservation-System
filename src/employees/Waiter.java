@@ -19,12 +19,7 @@ public class Waiter extends Employee {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public Order seeOrder(int orderNumber) {
-		// TODO: waiter is not allowed to see order's price
-		return null;
-	}
-
+	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

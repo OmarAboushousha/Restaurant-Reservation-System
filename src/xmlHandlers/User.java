@@ -34,6 +34,29 @@ public class User {
 	
 	@XmlElement(name = "pin_code")
 	private String visaCardPinCode;
+	
+	public User() {}
+
+	public User(String name, String username, String password, String role, double balance, Order order,
+			String visaCardNumber, String visaCardPinCode) {
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.balance = balance;
+		this.order = order;
+		this.visaCardNumber = visaCardNumber;
+		this.visaCardPinCode = visaCardPinCode;
+	}
+	
+	
+
+	public User(String name, String username, String password, String role) {
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+	}
 
 	public String getName() {
 		return name;

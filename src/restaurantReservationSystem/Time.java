@@ -1,7 +1,20 @@
 package restaurantReservationSystem;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "Time")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Time {
+	public Time() {
+	}
+
+	@XmlElement(name = "hour")
 	private int hour;
+	
+	@XmlElement(name = "minute")
 	private int minute;
 	
 	public Time(int hour, int minute) {
