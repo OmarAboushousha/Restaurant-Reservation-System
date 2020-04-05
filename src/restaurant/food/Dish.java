@@ -35,6 +35,8 @@ public abstract class Dish {
 	
 	@Override
 	public String toString() {
+
 		return name + "  " + price + " L.E" + "\n";
+
 	}
 }

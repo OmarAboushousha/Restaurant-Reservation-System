@@ -42,12 +42,6 @@ import xmlHandlers.XMLFileHandler;
 
 public class LoginScreen {
 	public static void loginScreen(Stage loginScreen) {
-		/*try {
-			Dashboard.showCustomer(new Customer("ahmed", "js", "eje"), loginScreen, restaurant);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		try {
 			
 			Restaurant restaurant = XMLFileHandler.LoadFile("Data.xml");
@@ -183,5 +177,7 @@ public class LoginScreen {
 			FileLoadError.display();
 		}
 	}
-
 }
+	
+
+

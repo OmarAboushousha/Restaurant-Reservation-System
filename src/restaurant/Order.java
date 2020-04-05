@@ -1,12 +1,12 @@
 package restaurant;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import customers.Customer;
 import restaurant.food.Dish;
 import restaurant.table.Table;
-import restaurantReservationSystem.Date;
 import restaurantReservationSystem.Time;
 
 public class Order {
@@ -15,8 +15,8 @@ public class Order {
 	private List<Dish> dishes = new ArrayList<>();
 	private Customer customer;
 	private float price;
-	private Date date;
-	private Time time;
+	private LocalDate date;
+	private  Time time;
 	private boolean paid;
 	private int orderNumber;
 	
@@ -52,11 +52,11 @@ public class Order {
 		this.price = price;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
@@ -95,8 +95,12 @@ public class Order {
 		
 	}*/
 	
-	public float calculatePrice()
+	public double calculatePrice()
 	{
+		double price = 0;
+		for (int i = 0; i < dishes.size(); i++) {
+			price += dishes.get(i).getPrice() * (1- dishes.get(i).getTax());
+		}
 		return price;
 	}
 	

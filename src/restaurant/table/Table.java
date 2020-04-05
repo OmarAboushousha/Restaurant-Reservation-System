@@ -70,7 +70,6 @@ public class Table {
 		
 	}
 	
-	//public stat void 
 	@Override
 	public String toString() {
 		if (isSmoking())
