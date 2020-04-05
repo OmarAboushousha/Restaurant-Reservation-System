@@ -16,7 +16,7 @@ public class Order {
 	private Customer customer;
 	private float price;
 	private Date date;
-	private  Time time;
+	private Time time;
 	private boolean paid;
 	private int orderNumber;
 	

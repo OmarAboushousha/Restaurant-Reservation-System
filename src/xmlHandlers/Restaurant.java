@@ -90,4 +90,11 @@ public class Restaurant {
 		return list;
 	}
 
+	public ObservableList<Dish> retrieveDishes() {
+		ObservableList<Dish> list = FXCollections.observableArrayList();
+		for(int i = 0; i < dishes.getDishes().size(); i++) {
+			list.add(menu.get(i));
+		}
+		return list;
+	}
 }

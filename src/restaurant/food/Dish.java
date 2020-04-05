@@ -35,7 +35,6 @@ public abstract class Dish {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return name;
+		return name + "  " + price + " L.E" + "\n";
 	}
 }
