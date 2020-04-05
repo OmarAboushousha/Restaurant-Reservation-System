@@ -87,7 +87,14 @@ public class Restaurant {
 		this.menu = menu;
 	}
 	
-	
+	public Reservation getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(Reservation reservations) {
+		this.reservations = reservations;
+	}
+
 	public ObservableList<Table> retrieveAvailableTables() {
 		ObservableList<Table> list = FXCollections.observableArrayList();
 		for(int i = 0; i < tables.getTables().size(); i++) {

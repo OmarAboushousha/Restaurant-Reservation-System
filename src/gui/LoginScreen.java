@@ -117,7 +117,7 @@ public class LoginScreen {
 									Cook cook = new Cook(person.getName(), person.getUsername(),
 											person.getPassword());
 									try {
-										Dashboard.showCook(cook, loginScreen);
+										Dashboard.showCook(cook, loginScreen, restaurant);
 									} catch (FileNotFoundException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
