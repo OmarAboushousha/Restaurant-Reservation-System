@@ -9,7 +9,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import restaurant.food.Appetizers;
+import restaurant.food.Dessert;
 import restaurant.food.Dish;
+import restaurant.food.MainCourse;
 import restaurant.table.Table;
 import restaurantReservationSystem.Person;
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -85,6 +88,31 @@ public class Restaurant {
 		for(int i = 0; i < tables.getTables().size(); i++) {
 			if(tables.getTables().get(i).isAvailable()) {
 				list.add(tables.getTables().get(i));
+			}
+		}
+		return list;
+		
+		
+	}
+	public ObservableList<Dish> retrieveDish(String menuType) {
+		ObservableList<Dish> list = FXCollections.observableArrayList();
+		if (menuType.equals("Appetizers")) {
+			for (int i = 0; i < menu.size(); i++) {
+				if (menu.get(i) instanceof Appetizers) {
+					list.add(menu.get(i));
+				}
+			}
+		} else if (menuType.equals("Main Course")) {
+			for (int i = 0; i < menu.size(); i++) {
+				if (menu.get(i) instanceof MainCourse) {
+					list.add(menu.get(i));
+				}
+			}
+		} else if (menuType.equals("Desserts")) {
+			for (int i = 0; i < menu.size(); i++) {
+				if (menu.get(i) instanceof Dessert) {
+					list.add(menu.get(i));
+				}
 			}
 		}
 		return list;

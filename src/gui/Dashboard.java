@@ -3,11 +3,13 @@ package gui;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 import customers.Customer;
 import employees.Cook;
 import employees.Manager;
 import employees.Waiter;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,9 +19,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox; javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -42,14 +47,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import restaurant.Order;
+import restaurant.food.Appetizers;
+import restaurant.food.Dish;
+import restaurant.food.MainCourse;
 import restaurant.table.Table;
-import restaurantReservationSystem.Date;
 import restaurantReservationSystem.Person;
-<<<<<<< HEAD
+import restaurantReservationSystem.Time;
 import xmlHandlers.DishX;
-=======
 import xmlHandlers.Restaurant;
->>>>>>> 43a50140a35e2fc370d5523898f77ed76684cac6
 
 public class Dashboard {
 	
@@ -104,12 +109,10 @@ public class Dashboard {
 		}
 		Label password = new Label("password:\t\t" + passIcon);
 		
-		Label spacer = new Label("\t\t\t\t\t\t\n\n\n");
 		
 		Button editName = new Button("edit");
 		Button editUserName = new Button("edit");
 		Button editPassword = new Button("edit");
-		Button save = new Button("Save");
 		
 		mainScreenArea.getChildren().clear();
 		mainScreenArea.add(header, 0, 0);
@@ -121,8 +124,6 @@ public class Dashboard {
 		mainScreenArea.add(editName, 1, 1);
 		mainScreenArea.add(editUserName, 1, 3);
 		mainScreenArea.add(editPassword, 1, 4);
-		mainScreenArea.add(save, 3, 6);
-		mainScreenArea.add(spacer, 2, 5);
 		
 		//edit buttons actions
 		editName.setOnAction(new EventHandler<ActionEvent>() {
@@ -324,6 +325,230 @@ private static void logoutConfirmation(Stage currentStage) {
 	}
 
 
+	private static void viewCustomerMenu(Order order, GridPane mainScreenArea, Restaurant restaurant, Customer customer) {
+		
+		
+		mainScreenArea.getChildren().clear();
+		Accordion accordion = new Accordion();
+		
+		Label header = new Label("Make your order");
+		header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+		
+		TitledPane appetizersTitle = new TitledPane();
+		GridPane appetizers = new GridPane();
+		appetizers.setVgap(5);
+		appetizers.setHgap(5);
+		appetizers.setPadding(new Insets(5, 5, 5, 5));
+		appetizersTitle.setText("Appetizers");
+		appetizersTitle.setContent(appetizers);
+		ObservableList<Dish> appetizersSelection = menuSelection(appetizers, "Appetizers", restaurant);
+		
+		TitledPane mainCourseTitle = new TitledPane();
+		GridPane mainCourse = new GridPane();
+		mainCourse.setVgap(5);
+		mainCourse.setHgap(5);
+		mainCourse.setPadding(new Insets(5, 5, 5, 5));
+		mainCourseTitle.setText("Main Course");
+		mainCourseTitle.setContent(mainCourse);
+		ObservableList<Dish> mainCourseSelection = menuSelection(mainCourse, "Main Course", restaurant);
+		
+		TitledPane dessertsTitle = new TitledPane();
+		GridPane desserts = new GridPane();
+		desserts.setVgap(5);
+		desserts.setHgap(5);
+		desserts.setPadding(new Insets(5, 5, 5, 5));
+		dessertsTitle.setText("Desserts");
+		dessertsTitle.setContent(desserts);
+		ObservableList<Dish> dessertSelection= menuSelection(desserts, "Desserts", restaurant);
+	
+		TitledPane drinksTitle = new TitledPane();
+		GridPane drinks = new GridPane();
+		drinks.setVgap(5);
+		drinks.setHgap(5);
+		drinks.setPadding(new Insets(5, 5, 5, 5));
+		drinksTitle.setText("Drinks");
+		drinksTitle.setContent(drinks);
+		ObservableList<Dish> drinksSelection = menuSelection(drinks, "Drinks", restaurant);
+		
+		
+		
+		accordion.getPanes().addAll(appetizersTitle, mainCourseTitle, dessertsTitle, drinksTitle);
+		
+		Button confirmButton = new Button("Confirm Order");
+		GridPane.setHalignment(confirmButton, HPos.LEFT);
+		
+		mainScreenArea.add(header, 0, 0);
+		mainScreenArea.add(accordion, 0, 1);
+		mainScreenArea.add(confirmButton, 1, 2);
+		
+		confirmButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				checkOut(customer, order, mainScreenArea, appetizersSelection, mainCourseSelection, dessertSelection, drinksSelection);
+				
+			}
+		});
+		
+		
+		
+	}
+	private static ObservableList<Dish> menuSelection(GridPane gridPane, String menuType, Restaurant restaurant) {
+		gridPane.getChildren().clear();
+		ColumnConstraints column1 = new ColumnConstraints(150, 150,
+			        Double.MAX_VALUE);
+			    ColumnConstraints column2 = new ColumnConstraints(50);
+			    ColumnConstraints column3 = new ColumnConstraints(150, 150,
+			        Double.MAX_VALUE);
+			    column1.setHgrow(Priority.ALWAYS);
+			    column3.setHgrow(Priority.ALWAYS);
+			    gridPane.getColumnConstraints().addAll(column1, column2, column3);
+
+			    Label menuLbl = new Label("Menu");
+			    GridPane.setHalignment(menuLbl, HPos.CENTER);
+			    gridPane.add(menuLbl, 0, 0);
+
+			    Label selectedLbl = new Label("Your Selection");
+			    gridPane.add(selectedLbl, 2, 0);
+			    GridPane.setHalignment(selectedLbl, HPos.CENTER);
+			    
+			    //fetching the list
+			    
+			    ListView<Dish> menuList = new ListView<>(restaurant.retrieveDish(menuType));
+			    gridPane.add(menuList, 0, 1);
+			    
+			    ObservableList<Dish> selected = FXCollections.observableArrayList();
+			    ListView<Dish> selectedList = new ListView<>(selected);
+			    gridPane.add(selectedList, 2, 1);
+
+			    Button sendRightButton = new Button(" > ");
+			    sendRightButton.setOnAction((ActionEvent event) -> {
+			      Dish potential = menuList.getSelectionModel()
+			          .getSelectedItem();
+			      if (potential != null) {
+			        menuList.getSelectionModel().clearSelection();
+			        selected.add(potential);
+			      }
+			    });
+
+			    Button sendLeftButton = new Button(" < ");
+			    sendLeftButton.setOnAction((ActionEvent event) -> {
+			      Dish s = selectedList.getSelectionModel().getSelectedItem();
+			      if (s != null) {
+			        selectedList.getSelectionModel().clearSelection();
+			        selected.remove(s);
+			      }
+			    });
+			    VBox vbox = new VBox(5);
+			    vbox.getChildren().addAll(sendRightButton, sendLeftButton);
+
+			    gridPane.add(vbox, 1, 1);
+			    
+			    return selected;
+	}
+	
+	private static void checkOut(Customer customer, Order order, GridPane mainScreenArea, ObservableList<Dish> appetizers, ObservableList<Dish> mainCourse, ObservableList<Dish> desserts, ObservableList<Dish> drinks) {
+		
+		ObservableList<Dish> customerSelection = FXCollections.observableArrayList();
+		
+		for (int i = 0; i < appetizers.size(); i++) {
+			customerSelection.add(appetizers.get(i));
+		}
+		
+		for (int i = 0; i < mainCourse.size(); i++) {
+			customerSelection.add(mainCourse.get(i));
+		}
+		
+		for (int i = 0; i < desserts.size(); i++) {
+			customerSelection.add(desserts.get(i));
+		}
+		
+		for (int i = 0; i < drinks.size(); i++) {
+			customerSelection.add(drinks.get(i));
+		}
+		
+		for (int i = 0; i < customerSelection.size(); i++)
+		{
+			order.getDishes().add(customerSelection.get(i));
+		}
+		
+		Label header = new Label("Checkout");
+		header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+		Label tableNum = new Label("Table number:\t" + order.getTable());
+		Label orderDateAndTime = new Label("Date:\t" + order.getDate() + "\tTime:\t" + customer.getCurrentOrder().getDate());
+		Label totalAmount = new Label("Total:\t" + order.calculatePrice());
+		
+		TableView<Dish> tableView = new TableView<Dish>();
+		
+		TableColumn<Dish, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setMinWidth(200);
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        
+        TableColumn<Dish, Double> priceColumn = new TableColumn<>("Price");
+        priceColumn.setMinWidth(200);
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        
+        tableView.setItems(customerSelection);
+        tableView.getColumns().addAll(nameColumn, priceColumn);
+        
+        Button checkOuButton = new Button ("Checkout");
+        
+        RadioButton cashButton = new RadioButton("Cash");
+		RadioButton visaButton = new RadioButton("Visa");
+		
+		cashButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				visaButton.setSelected(false);
+			}
+		});
+		visaButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				cashButton.setSelected(false);	
+			}
+		});
+		
+		checkOuButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				if (visaButton.isSelected()) 
+				{
+					if(!visaTransaction(customer, order)) {
+						return;
+					}
+				}
+				
+				order.setCustomer(customer);
+				customer.setCurrentOrder(order);
+				
+				
+			}
+		});
+		
+
+        
+        mainScreenArea.add(header, 0, 0);
+        mainScreenArea.add(tableNum, 0, 1);
+        mainScreenArea.add(orderDateAndTime, 0, 2);
+        mainScreenArea.add(tableView, 0, 3);
+        mainScreenArea.add(totalAmount, 0, 4);
+        mainScreenArea.add(cashButton, 0, 5);
+        mainScreenArea.add(visaButton, 0, 5);
+        mainScreenArea.add(checkOuButton, 1, 6);
+        
+        GridPane.setHalignment(cashButton, HPos.LEFT);
+        GridPane.setHalignment(visaButton, HPos.RIGHT);
+        
+	}
+	protected static boolean visaTransaction(Customer customer, Order order) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	public static void showCustomer(Customer customer, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 		
 		//Layout
@@ -364,10 +589,11 @@ private static void logoutConfirmation(Stage currentStage) {
 		
 		ToolBar toolbar = new ToolBar();
 		Button logOutButton = new Button("Log out");
+		Button saveButton = new Button("Save");
 		Button reviewUsButton = new Button("Review us");
 		HBox spacer = new HBox();                 
 	    HBox.setHgrow(spacer, Priority.ALWAYS);
-		toolbar.getItems().addAll(spacer, logOutButton, reviewUsButton);
+		toolbar.getItems().addAll(spacer, logOutButton, saveButton, reviewUsButton);
 		
 		Image image = new Image(new FileInputStream("header image.jpg"));
 		ImageView imageView = new ImageView(image); 
@@ -434,9 +660,7 @@ private static void logoutConfirmation(Stage currentStage) {
 				}			
 			}
 		});
-<<<<<<< HEAD
-        //makeNewOrderButton    
-=======
+
         //makeNewOrderButton
         makeNewOrderButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -446,29 +670,79 @@ private static void logoutConfirmation(Stage currentStage) {
 				Label header = new Label("Reserve a table");
 				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 				
+				DatePicker datePicker = new DatePicker();
 				
-				ComboBox<Table> checkAvailable = new ComboBox<>(restaurant.retrieveAvailableTables());
-				checkAvailable.setPromptText("Check available tables");
+				ComboBox<Table> availableTables = new ComboBox<>(restaurant.retrieveAvailableTables());
+				availableTables.setPromptText("Check available tables");
+				Label message = new Label();
+				Label dateLbl = new Label("Select date:");
+				Label timeLbl = new Label("Select time: ");
+				TextField hourTxt = new TextField();
+				hourTxt.setPrefWidth(100);
+				hourTxt.setMaxWidth(100);
+				hourTxt.setPromptText("hour");
+				Label colonLbl = new Label(" : ");
+				TextField minTxt = new TextField();
+				minTxt.setPrefWidth(100);
+				minTxt.setMaxWidth(100);
+				minTxt.setPromptText("minute");
 				Button selectButton = new Button("Select");
 				mainScreenArea.add(header, 0, 0);
-				mainScreenArea.add(checkAvailable, 0, 1);
-				mainScreenArea.add(selectButton, 1, 2);
+				mainScreenArea.add(availableTables, 1, 1);
+				mainScreenArea.add(datePicker, 1, 2);
+				mainScreenArea.add(dateLbl, 0, 2);
+				mainScreenArea.add(timeLbl, 0, 3);
+				mainScreenArea.add(hourTxt, 1, 3);
+				mainScreenArea.add(colonLbl, 1, 3);
+				mainScreenArea.add(minTxt, 1, 3);
+				mainScreenArea.add(message, 0, 4);
+				mainScreenArea.add(selectButton, 2, 5);
+				
+				GridPane.setHalignment(hourTxt, HPos.LEFT);
+				GridPane.setHalignment(colonLbl, HPos.CENTER);
+				GridPane.setHalignment(minTxt, HPos.RIGHT);
+				
+				Order order = new Order();
+				if (restaurant.retrieveAvailableTables() == null) {
+					message.setText("We're sorry.\nThere were no available tables at this time\nPlease try again later");
+					message.setTextFill(Color.web("#ff0000", 0.8));
+				}
+				else {
 				
 				selectButton.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
 					public void handle(ActionEvent event) {
 						//TODO: add to customer's order this table
-						//TODO: redirect to selecting dishes
+						Time time = new Time(Integer.parseInt(hourTxt.getText()),Integer.parseInt(minTxt.getText().toString()));
+						if(availableTables.getValue() != null && time.getHour() != 0 && time.getMinute() != 0 && datePicker.getValue() != null) {
+							
+							order.setDate(datePicker.getValue());
+							order.setTime(time);
+							order.setTable(availableTables.getValue());
+							order.getTable().setAvailable(false);
+							//TODO: redirect to selecting dishes
+							viewCustomerMenu(order, mainScreenArea, restaurant, customer);
+							
+							//TODO: redirect to selecting dishes
+							
+						} else {
+							message.setText("Please fill in all information correctly");
+							message.setTextFill(Color.web("#ff0000", 0.8));
+						}
+						
+
+						
+						
 						
 					}
 				});
 				
-				
+				}
 				
 			}
 		});
->>>>>>> 43a50140a35e2fc370d5523898f77ed76684cac6
+
         //logOutButton
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -520,6 +794,8 @@ private static void logoutConfirmation(Stage currentStage) {
         stage.show();
 	}
 	
+	
+	
 	public static void showManager(Manager manager, Stage stage) throws FileNotFoundException {
 		
 		stage.setTitle("Dashboard");
@@ -566,9 +842,10 @@ private static void logoutConfirmation(Stage currentStage) {
 		
 		ToolBar toolbar = new ToolBar();
 		Button logOutButton = new Button("Log out");
+		Button saveButton = new Button("Save");
 		HBox spacer = new HBox();                 
 	    HBox.setHgrow(spacer, Priority.ALWAYS);
-		toolbar.getItems().addAll(spacer, logOutButton);
+		toolbar.getItems().addAll(spacer, saveButton, logOutButton);
 		
 		Image image = new Image(new FileInputStream("header image.jpg"));
 		ImageView imageView = new ImageView(image); 
@@ -664,9 +941,10 @@ private static void logoutConfirmation(Stage currentStage) {
 		
 		ToolBar toolbar = new ToolBar();
 		Button logOutButton = new Button("Log out");
+		Button saveButton = new Button("Save");
 		HBox spacer = new HBox();                 
 	    HBox.setHgrow(spacer, Priority.ALWAYS);
-		toolbar.getItems().addAll(spacer, logOutButton);
+		toolbar.getItems().addAll(spacer, saveButton, logOutButton);
 		
 		Image image = new Image(new FileInputStream("cook header.jpg"));
 		ImageView imageView = new ImageView(image); 
@@ -759,9 +1037,10 @@ private static void logoutConfirmation(Stage currentStage) {
 		
 		ToolBar toolbar = new ToolBar();
 		Button logOutButton = new Button("Log out");
+		Button saveButton = new Button("Save");
 		HBox spacer = new HBox();                 
 	    HBox.setHgrow(spacer, Priority.ALWAYS);
-		toolbar.getItems().addAll(spacer, logOutButton);
+		toolbar.getItems().addAll(spacer, saveButton, logOutButton);
 		
 		Image image = new Image(new FileInputStream("header image.jpg"));
 		ImageView imageView = new ImageView(image); 

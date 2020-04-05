@@ -42,13 +42,13 @@ import xmlHandlers.XMLFileHandler;
 
 public class LoginScreen {
 	public static void loginScreen(Stage loginScreen) {
+//		try {
+//			Dashboard.showCustomer(new Customer("ahmed", "js", "eje"), loginScreen, restaurant);
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		try {
-			Dashboard.showCustomer(new Customer("ahmed", "js", "eje"), loginScreen, restaurant);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		/*try {
 			
 			Restaurant restaurant = XMLFileHandler.LoadFile("Data.xml");
 
@@ -141,7 +141,7 @@ public class LoginScreen {
 								Customer customer = new Customer(person.getName(),
 										person.getUsername(), person.getPassword());
 								try {
-									Dashboard.showCustomer(customer, loginScreen);
+									Dashboard.showCustomer(customer, loginScreen, restaurant);
 								} catch (FileNotFoundException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -181,7 +181,7 @@ public class LoginScreen {
 				
 		} catch (JAXBException e) {
 			FileLoadError.display();
-		}*/
+		}
 	}
 
 }
