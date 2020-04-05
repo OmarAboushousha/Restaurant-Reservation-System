@@ -142,7 +142,7 @@ public class SignUpScreen {
 						restaurant.getPersons().add(manager);
 						try {
 							XMLFileHandler.saveFile(restaurant, "Data.xml");
-							Dashboard.showManager(manager, signUpStage, restaurant, restaurant.getReservations());
+							Dashboard.showManager(manager, signUpStage, restaurant);
 						} catch (FileNotFoundException | JAXBException e) {
 							// TODO Auto-generated catch block
 							AlertBox.display("Unexpected Error!");
@@ -152,8 +152,9 @@ public class SignUpScreen {
 						restaurant.getPersons().add(cook);
 						try {
 							XMLFileHandler.saveFile(restaurant, "Data.xml");
-							Dashboard.showCook(cook, signUpStage, restaurant, restaurant.getReservations());
+							Dashboard.showCook(cook, signUpStage, restaurant);
 						} catch (FileNotFoundException | JAXBException e) {
+
 							// TODO Auto-generated catch block
 							AlertBox.display("Unexpected Error!");
 						}							
@@ -162,8 +163,9 @@ public class SignUpScreen {
 						restaurant.getPersons().add(waiter);
 						try {
 							XMLFileHandler.saveFile(restaurant, "Data.xml");
-							Dashboard.showWaiter(waiter, signUpStage, restaurant, restaurant.getReservations());
+							Dashboard.showWaiter(waiter, signUpStage, restaurant);
 						} catch (FileNotFoundException | JAXBException e) {
+
 							// TODO Auto-generated catch block
 							AlertBox.display("Unexpected Error!");
 						}							

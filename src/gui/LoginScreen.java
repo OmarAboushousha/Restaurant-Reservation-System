@@ -95,7 +95,7 @@ public class LoginScreen {
 									Manager manager = new Manager(person.getName(),
 											person.getUsername(), person.getPassword());
 									try {
-										Dashboard.showManager(manager, loginScreen, restaurant, restaurant.getReservations());
+										Dashboard.showManager(manager, loginScreen, restaurant);
 									} catch (FileNotFoundException e) {
 										AlertBox.display("Unexpected Error!");
 									}
@@ -106,7 +106,7 @@ public class LoginScreen {
 									Waiter waiter = new Waiter(person.getName(), person.getUsername(),
 											person.getPassword());
 									try {
-										Dashboard.showWaiter(waiter, loginScreen, restaurant, restaurant.getReservations());
+										Dashboard.showWaiter(waiter, loginScreen, restaurant);
 									} catch (FileNotFoundException e) {
 										AlertBox.display("Unexpected Error!");
 									}
@@ -117,7 +117,7 @@ public class LoginScreen {
 									Cook cook = new Cook(person.getName(), person.getUsername(),
 											person.getPassword());
 									try {
-										Dashboard.showCook(cook, loginScreen, restaurant, restaurant.getReservations());
+										Dashboard.showCook(cook, loginScreen, restaurant);
 									} catch (FileNotFoundException e) {
 										AlertBox.display("Unexpected Error!");
 									}
