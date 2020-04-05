@@ -24,7 +24,7 @@ public class User {
 	private String role;
 	
 	@XmlElement(name = "balance")
-	private float balance;
+	private double balance;
 	
 	@XmlElement(name = "order")
 	private Order order;
@@ -67,11 +67,11 @@ public class User {
 		this.role = role;
 	}
 
-	public float getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(float balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 

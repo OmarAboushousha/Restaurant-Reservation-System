@@ -16,7 +16,7 @@ public class Order {
 	private Table table;
 	private List<Dish> dishes = new ArrayList<>();
 	private Customer customer;
-	private float price;
+	private double price;
 	private LocalDate date;
 	private  Time time;
 	private boolean paid;
@@ -46,11 +46,11 @@ public class Order {
 		this.customer = customer;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -111,6 +111,7 @@ public class Order {
 		for (int i = 0; i < dishes.size(); i++) {
 			price += dishes.get(i).getPrice() * (1- dishes.get(i).getTax());
 		}
+		this.price = price;
 		return price;
 	}
 	

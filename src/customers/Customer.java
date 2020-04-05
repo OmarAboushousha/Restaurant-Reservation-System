@@ -13,7 +13,7 @@ import restaurantReservationSystem.Person;
 
 public class Customer extends Person {
 
-	private float balance;
+	private double balance;
 	private String visaCardNumber;
 	private String visaCardPinCode;
 	private Order currentOrder;
@@ -22,10 +22,10 @@ public class Customer extends Person {
 		super(name, username, password);
 	}
 	
-	public Customer(String name, String username, String password, float balance, String visaCardNumber,
+	public Customer(String name, String username, String password, double d, String visaCardNumber,
 			String visaCardPinCode, Order currentOrder) {
 		super(name, username, password);
-		this.balance = balance;
+		this.balance = d;
 		this.visaCardNumber = visaCardNumber;
 		this.visaCardPinCode = visaCardPinCode;
 		this.currentOrder = currentOrder;
@@ -39,12 +39,12 @@ public class Customer extends Person {
 		this.currentOrder = currentOrder;
 	}
 
-	public float getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(float balance) {
-		this.balance = balance;
+	public void setBalance(double d) {
+		this.balance = d;
 	}
 
 	public String getVisaCardNumber() {

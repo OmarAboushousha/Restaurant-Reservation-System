@@ -39,12 +39,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
-<<<<<<< HEAD
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
-=======
 import javafx.scene.control.RadioButton;
->>>>>>> 6ddb844235b021097d7583c21670e96542b3021c
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -163,6 +160,18 @@ public class Dashboard {
 		mainScreenArea.add(editUserName, 1, 3);
 		mainScreenArea.add(editPassword, 1, 4);
 		
+		if (person instanceof Customer) {
+			Button viewVisa = new Button("View Visa Card Information");
+			mainScreenArea.add(viewVisa, 2, 5);
+			viewVisa.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					VisaCardInfo.editVisaWindow((Customer) person);
+					
+				}
+			});
+		}
 		//edit buttons actions
 		editName.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -416,15 +425,31 @@ public class Dashboard {
 		Button confirmButton = new Button("Confirm Order");
 		GridPane.setHalignment(confirmButton, HPos.LEFT);
 		
+		Label message = new Label();
+		
 		mainScreenArea.add(header, 0, 0);
 		mainScreenArea.add(accordion, 0, 1);
 		mainScreenArea.add(confirmButton, 1, 2);
+		mainScreenArea.add(message, 0, 2);
 		
 		confirmButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				checkOut(customer, order, mainScreenArea, appetizersSelection, mainCourseSelection, dessertSelection, drinksSelection);
+				if (appetizersSelection.size() == 0 && mainCourseSelection.size() == 0 
+						&& dessertSelection.size() == 0 && drinksSelection.size() == 0)
+				{
+					message.setText("Please choose your order!");
+					message.setTextFill(Color.web("#008000", 0.8));
+				}
+					
+				else checkOut(customer, order, restaurant, mainScreenArea,
+							appetizersSelection, mainCourseSelection, dessertSelection, drinksSelection);
+				
+					 
+					 
+				
+					
 				
 			}
 		});
@@ -486,7 +511,7 @@ public class Dashboard {
 			    return selected;
 	}
 	
-	private static void checkOut(Customer customer, Order order, GridPane mainScreenArea, 
+	private static void checkOut(Customer customer, Order order, Restaurant restaurant, GridPane mainScreenArea, 
 			ObservableList<Dish> appetizers, ObservableList<Dish> mainCourse,
 				ObservableList<Dish> desserts, ObservableList<Dish> drinks) {
 		
@@ -514,6 +539,7 @@ public class Dashboard {
 		{
 			order.getDishes().add(customerSelection.get(i));
 		}
+		
 		
 		Label header = new Label("Checkout");
 		header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -560,15 +586,19 @@ public class Dashboard {
 			public void handle(ActionEvent event) {
 				if (visaButton.isSelected()) 
 				{
-					if(!visaTransaction(customer, order)) {
-						return;
-					}
+					VisaTransaction.visaTransaction(customer, order, restaurant, mainScreenArea); 
 				}
+				else if (cashButton.isSelected()) {
 				
 				order.setCustomer(customer);
 				customer.setCurrentOrder(order);
+				restaurant.getReservations().getOrders().add(order);
 				AlertBox.display("Checkout Successfull!");
-				
+				mainScreenArea.getChildren().clear();
+				}
+				else {
+					AlertBox.display("Please enter method of payment");
+				}
 				
 			}
 		});
@@ -587,10 +617,7 @@ public class Dashboard {
         GridPane.setHalignment(visaButton, HPos.RIGHT);
         
 	}
-	protected static boolean visaTransaction(Customer customer, Order order) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 
 	public static void showCustomer(Customer customer, Stage stage, Restaurant restaurant) throws FileNotFoundException {
@@ -706,7 +733,7 @@ public class Dashboard {
 				dishPrice.setMinWidth(100);
 				dishPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 				
-				table.setItems(customer.getOrder().retrieveDishes());
+				table.setItems(customer.getCurrentOrder().retrieveDishes());
 				table.getColumns().add(dishName);
 				table.getColumns().add(dishPrice);
 				
@@ -770,22 +797,30 @@ public class Dashboard {
 					@Override
 					public void handle(ActionEvent event) {
 						//TODO: add to customer's order this table
-						Time time = new Time(Integer.parseInt(hourTxt.getText()),Integer.parseInt(minTxt.getText().toString()));
-						if(availableTables.getValue() != null && time.getHour() != 0 && time.getMinute() != 0 && datePicker.getValue() != null) {
+						try {
 							
-							order.setDate(datePicker.getValue());
-							order.setTime(time);
-							order.setTable(availableTables.getValue());
-							order.getTable().setAvailable(false);
-							//TODO: redirect to selecting dishes
-							viewCustomerMenu(order, mainScreenArea, restaurant, customer);
-							
-							//TODO: redirect to selecting dishes
-							
-						} else {
-							message.setText("Please fill in all information correctly");
+							Time time = new Time(Integer.parseInt(hourTxt.getText()),Integer.parseInt(minTxt.getText().toString()));
+							if(availableTables.getValue() != null && time.getHour() != 0 && time.getMinute() != 0 && datePicker.getValue() != null) {
+								
+								order.setDate(datePicker.getValue());
+								order.setTime(time);
+								order.setTable(availableTables.getValue());
+								order.getTable().setAvailable(false);
+								//TODO: redirect to selecting dishes
+								viewCustomerMenu(order, mainScreenArea, restaurant, customer);
+								
+								//TODO: redirect to selecting dishes
+								
+							} else {
+								message.setText("Please fill in all information correctly");
+								message.setTextFill(Color.web("#ff0000", 0.8));
+							}
+						} catch(NumberFormatException e) {
+							message.setText("Please choose a valid time");
 							message.setTextFill(Color.web("#ff0000", 0.8));
 						}
+						
+						
 						
 
 						
@@ -830,7 +865,7 @@ public class Dashboard {
 
 					@Override
 					public void handle(ActionEvent event) {
-						//restaurant.getReviews().getReviews().add(comment.getText());
+						restaurant.getReviews().getReviews().add(comment.getText());
 						mainScreenArea.getChildren().clear();
 						Label header = new Label("Thank You!");
 						header.setFont(Font.font("Arial", FontWeight.BOLD, 20));

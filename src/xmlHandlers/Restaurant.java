@@ -31,11 +31,12 @@ public class Restaurant {
 	private Dishes dishes;
 	
 	@XmlElement(name = "reviews")
-	private Review reviews;
+	private Review reviews = new Review();
 	
 	//@XmlElement(name = "reservations")
-	//private Reservation reservations;
+	private Reservation reservations = new Reservation();
 	
+	//@XmlElement(name = "reviews")
 	public Review getReviews() {
 		return reviews;
 	}
