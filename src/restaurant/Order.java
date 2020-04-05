@@ -98,18 +98,11 @@ public class Order {
 		this.paid = paid;
 	}
 
-
-
 	public Order reserve()
 	{
 		Order order = new Order();
 		return order;
 	}
-	
-	/*public float addCoupon(String couponCode)
-	{
-		
-	}*/
 	
 	public ObservableList<Dish> retrieveDishes() {
 		ObservableList<Dish> list = FXCollections.observableArrayList();
@@ -129,4 +122,14 @@ public class Order {
 		return price;
 	}
 
+	@Override
+	public String toString() {
+		int i = 0;
+		String info = "Date: " + date + "\nTime: " + time + "\nTable Number: " +
+				table.getTableNumber() + "\nCustomer Name: " + customer.getName() + "\nDishes: " +
+				dishes.get(i).getName();
+		for(i = 1; i < dishes.size(); i++)
+			info = info.concat("\n\t    " + dishes.get(i).getName());
+		return info;
+	}
 }

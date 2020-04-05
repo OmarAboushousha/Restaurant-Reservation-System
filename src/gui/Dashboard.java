@@ -877,7 +877,7 @@ public class Dashboard {
 	
 	
 	
-	public static void showManager(Manager manager, Stage stage, Restaurant restaurant, Reservation reservation) throws FileNotFoundException {
+	public static void showManager(Manager manager, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 		
 		stage.setTitle("Dashboard");
 		BorderPane border = new BorderPane();
@@ -958,61 +958,65 @@ public class Dashboard {
         		
 				mainScreenArea.getChildren().clear();
 
-				String date = "Date\n\n"; 
-        		String time = "Time\n\n";
-        		String number = "Table Number\n\n";
-        		String name = "Customer Name\n\n";
-        		String dishes = "Ordered Dishes\n\n";
-        		String price = "Total Price\n\n";
-        		int x = 0;
-
-       			for(int i = 0; i < reservation.getOrders().size(); i++) {
-       				date = date.concat(reservation.getOrders().get(i).getDate() + "\n\n");
-       				time = time.concat(reservation.getOrders().get(i).getTime() + "\n\n");
-       				number = number.concat(reservation.getOrders().get(i).getTable().getTableNumber() + "\n\n");
-       				name = name.concat(reservation.getOrders().get(i).getCustomer().getName() + "\n\n");
-       				for(int j = 0; j < reservation.getOrders().get(x).getDishes().size(); j++) {
-       					dishes = dishes.concat(reservation.getOrders().get(x).getDishes().get(j) + "\n");
-       				}
-       				x++;
-       				dishes.concat("\n");
-       				price = price.concat(reservation.getOrders().get(i).getPrice() + "\n\n");
-       				
-       			}
        			Label header = new Label("Today's reservations:");
 				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
        			
-        		Label info1 = new Label(date);
-        		info1.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		Label info = new Label();
+        		info.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
         		
-        		Label info2 = new Label(time);
-        		info2.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		String string = "";
         		
-        		Label info3 = new Label(number);
-        		info3.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		for(int i = 0; i < restaurant.getReservations().getOrders().size(); i++) {
+        			string = string.concat(i + 1 + ".\n" + restaurant.getReservations().getOrders().get(i).toString() + 
+        					"\n" + "Total Price: " + 
+        					restaurant.getReservations().getOrders().get(i).calculatePrice() + "\n");
+        		}
+           		
+        		info.setText(string);
         		
-        		Label info4 = new Label(name);
-        		info4.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
-        		
-        		Label info5 = new Label(dishes);
-        		info5.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
-        		
-        		Label info6 = new Label(price);
-        		info6.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
-        		
-        		/*ScrollBar scrollBar = new ScrollBar();
-        		scrollBar.setMin(500);
-        		scrollBar.setValue(0);
-        		scrollBar.setMax(500);*/
+        		ScrollPane scrollPane = new ScrollPane();
+        		scrollPane.setContent(info);
+        		scrollPane.setPrefWidth(200);
         		
         		mainScreenArea.add(header, 0, 0);
-				mainScreenArea.add(info1, 0, 1);
-				mainScreenArea.add(info2, 1, 1);
-				mainScreenArea.add(info3, 2, 1);
-				mainScreenArea.add(info4, 3, 1);
-				mainScreenArea.add(info5, 4, 1);
-				mainScreenArea.add(info6, 5, 1);
-				//mainScreenArea.add(scrollBar, 0, 20);
+				mainScreenArea.add(info, 0, 1);
+				mainScreenArea.add(scrollPane, 0, 1);
+			}
+		});
+        
+        viewStatButton.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	@Override
+			public void handle(ActionEvent event) {
+				
+        		mainScreenArea.getChildren().clear();
+        		
+        		Label header = new Label("Today's statistics:");
+				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        		
+        		double total = 0;
+        		String string = "";
+        		
+				for(int i = 0; i < restaurant.getReservations().getOrders().size(); i++)
+					total += restaurant.getReservations().getOrders().get(i).calculatePrice();
+				
+				string = string.concat("Total money earned for today: " + total + "\n\nToday's reviews:\n");
+				
+				if(restaurant.getReviews().getReviews().size() == 0) {
+					Label notice = new Label("No reviews for today.");
+	        		notice.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+	        		mainScreenArea.add(notice, 0, 3);
+				}
+				else {
+					for(int i = 0; i < restaurant.getReviews().getReviews().size(); i++)
+						string = string.concat(i + 1 + ".\n" + restaurant.getReviews().getReviews().get(i) + "\n");
+				}
+				
+				Label info = new Label(string);
+        		info.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		
+        		mainScreenArea.add(header, 0, 0);
+        		mainScreenArea.add(info, 0, 1);
 			}
 		});
         
@@ -1064,7 +1068,7 @@ public class Dashboard {
         stage.show();
 	}
 	
-	public static void showCook(Cook cook, Stage stage, Restaurant restaurant, Reservation reservation) throws FileNotFoundException {
+	public static void showCook(Cook cook, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 
 		
 		stage.setTitle("Dashboard");
@@ -1220,7 +1224,7 @@ public class Dashboard {
         stage.show();
 	}
 	
-	public static void showWaiter(Waiter waiter, Stage stage, Restaurant restaurant, Reservation reservation) throws FileNotFoundException {
+	public static void showWaiter(Waiter waiter, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 		
 		stage.setTitle("Dashboard");
 		BorderPane border = new BorderPane();
@@ -1286,36 +1290,17 @@ public class Dashboard {
        		public void handle(ActionEvent event) {
         		
         		mainScreenArea.getChildren().clear();
-        		
-        		/*Order order1 = new Order();
-        		Order order2 = new Order();
-        		Customer customer1 = new Customer();
-        		Customer customer2 = new Customer();
-        		Time time1 = new Time(12, 30);
-        		Time time2 = new Time(3, 15);
-        		customer1.setName("Ahmed");
-        		customer2.setName("Mohamed");
-        		order1.setTable(restaurant.getTables().getTables().get(0));
-        		order2.setTable(restaurant.getTables().getTables().get(1));
-        		order1.setCustomer(customer1);
-        		order2.setCustomer(customer2);
-        		order1.setTime(time1);
-        		order2.setTime(time2);
-        		List<Order> orders = new ArrayList<>();
-        		orders.add(order1);
-        		orders.add(order2);
-        		reservation.setOrders(orders);*/
-        		
+        		       		
         		String date = "Date\n\n";
         		String time = "Time\n\n";
         		String number = "Table Number\n\n";
         		String name = "Customer Name\n\n";
 
-       			for(int i = 0; i < reservation.getOrders().size(); i++) {
-       				date = date.concat(reservation.getOrders().get(i).getDate() + "\n");
-       				time = time.concat(reservation.getOrders().get(i).getTime() + "\n");
-       				number = number.concat(reservation.getOrders().get(i).getTable().getTableNumber() + "\n");
-       				name = name.concat(reservation.getOrders().get(i).getCustomer().getName() + "\n");
+       			for(int i = 0; i < restaurant.getReservations().getOrders().size(); i++) {
+       				date = date.concat(restaurant.getReservations().getOrders().get(i).getDate() + "\n");
+       				time = time.concat(restaurant.getReservations().getOrders().get(i).getTime() + "\n");
+       				number = number.concat(restaurant.getReservations().getOrders().get(i).getTable().getTableNumber() + "\n");
+       				name = name.concat(restaurant.getReservations().getOrders().get(i).getCustomer().getName() + "\n");
        			}
        			Label header = new Label("Today's reservations:");
 				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -1339,7 +1324,6 @@ public class Dashboard {
 				mainScreenArea.add(info4, 3, 1);
        		}       	
 		});
-        
         
         viewProfileButton.setOnAction(new EventHandler<ActionEvent>() {
        			
