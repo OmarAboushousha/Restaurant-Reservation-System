@@ -355,7 +355,7 @@ public class Dashboard {
 		logoutConfirm.setScene(scene);
 		logoutConfirm.showAndWait();
 	}
-
+ 
 
 	private static void viewCustomerMenu(Order order, GridPane mainScreenArea, Restaurant restaurant, Customer customer) {
 		
