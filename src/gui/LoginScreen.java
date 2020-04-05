@@ -84,7 +84,7 @@ public class LoginScreen {
 					person = Person.login(usernameInput.getText(), passwordInput.getText(), restaurant);
 					
 					if(person == null)
-						LoginError.display("Invalid username or password.");
+						AlertBox.display("Invalid username or password.");
 					else {
 						if(staffUser.isSelected()) {
 							if (person instanceof Employee) {
@@ -127,7 +127,7 @@ public class LoginScreen {
 									
 								}
 							}
-							else LoginError.display("Please choose correct type of user.");
+							else AlertBox.display("Please choose correct type of user.");
 						}
 						else if (customerUser.isSelected()) {
 							if (person instanceof Customer) {
@@ -142,8 +142,8 @@ public class LoginScreen {
 								}
 								loginScreen.setTitle("Customer Dashboard");
 							}
-							else LoginError.display("Please choose correct type of user.");
-						} else LoginError.display("Please choose correct type of user.");
+							else AlertBox.display("Please choose correct type of user.");
+						} else AlertBox.display("Please choose correct type of user.");
 					}
 				}
 			});

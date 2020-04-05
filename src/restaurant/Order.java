@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import customers.Customer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import restaurant.food.Dish;
 import restaurant.table.Table;
 import restaurantReservationSystem.Time;
@@ -94,6 +96,14 @@ public class Order {
 	{
 		
 	}*/
+	
+	public ObservableList<Dish> retrieveDishes() {
+		ObservableList<Dish> list = FXCollections.observableArrayList();
+		for (int i = 0; i < dishes.size(); i++) {
+			list.add(dishes.get(i));
+		}
+		return list;
+	}
 	
 	public double calculatePrice()
 	{

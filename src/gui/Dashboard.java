@@ -483,6 +483,8 @@ public class Dashboard {
 			ObservableList<Dish> appetizers, ObservableList<Dish> mainCourse,
 				ObservableList<Dish> desserts, ObservableList<Dish> drinks) {
 		
+		mainScreenArea.getChildren().clear();
+		
 		ObservableList<Dish> customerSelection = FXCollections.observableArrayList();
 		
 		for (int i = 0; i < appetizers.size(); i++) {
@@ -509,7 +511,7 @@ public class Dashboard {
 		Label header = new Label("Checkout");
 		header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		Label tableNum = new Label("Table number:\t" + order.getTable());
-		Label orderDateAndTime = new Label("Date:\t" + order.getDate() + "\tTime:\t" + customer.getCurrentOrder().getDate());
+		Label orderDateAndTime = new Label("Date:\t" + order.getDate() + "\tTime:\t" + order.getTime());
 		Label totalAmount = new Label("Total:\t" + order.calculatePrice());
 		
 		TableView<Dish> tableView = new TableView<Dish>();
@@ -558,6 +560,7 @@ public class Dashboard {
 				
 				order.setCustomer(customer);
 				customer.setCurrentOrder(order);
+				AlertBox.display("Checkout Successfull!");
 				
 				
 			}
@@ -677,14 +680,12 @@ public class Dashboard {
 			@Override
 			public void handle(ActionEvent event) {
 				mainScreenArea.getChildren().clear();
-				Label header = new Label("Order review");
+				Label header = new Label("View Recent Order");
 				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 				
 		        mainScreenArea.add(header, 0, 0);
 		        
-		        Order order = new Order();
-				order.setDishes(restaurant.getMenu());
-				customer.setCurrentOrder(order);
+		        try {
 		        
 				TableView<Dish> table = new TableView<>();
 				
@@ -696,11 +697,14 @@ public class Dashboard {
 				dishPrice.setMinWidth(100);
 				dishPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 				
-				table.setItems(restaurant.retrieveDishes());
+				table.setItems(customer.getOrder().retrieveDishes());
 				table.getColumns().add(dishName);
 				table.getColumns().add(dishPrice);
 				
-				mainScreenArea.add(table, 0, 1);		
+				mainScreenArea.add(table, 0, 1);	
+		        } catch (NullPointerException e) {
+		        	mainScreenArea.add(new Label("You have no recent orders"), 0, 1);
+		        }
 			}
 		});
 

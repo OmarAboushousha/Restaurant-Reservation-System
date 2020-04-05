@@ -33,8 +33,8 @@ public class Restaurant {
 	@XmlElement(name = "reviews")
 	private Review reviews;
 	
-	@XmlElement(name = "reservations")
-	private Reservation reservations;
+	//@XmlElement(name = "reservations")
+	//private Reservation reservations;
 	
 	public Review getReviews() {
 		return reviews;
@@ -131,11 +131,11 @@ public class Restaurant {
 		return list;
 	}
 	
-	public ObservableList<Order> retrieveOrders() {
+	/*public ObservableList<Order> retrieveOrders() {
 		ObservableList<Order> list = FXCollections.observableArrayList();
 		for(int i = 0; i < reservations.getOrders().size(); i++) {
 			list.add(reservations.getOrders().get(i));
 		}
 		return list;
-	}
+	}*/
 }

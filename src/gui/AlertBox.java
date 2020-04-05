@@ -10,15 +10,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class LoginError {
+public class AlertBox {
 	
-	public static void display(String errorMessage){
+	public static void display(String message){
 	
 	Stage errorWindow = new Stage();
 	errorWindow.initModality(Modality.APPLICATION_MODAL);
-	errorWindow.setTitle("Error!");
+	errorWindow.setTitle(message);
 	
-	Label label = new Label(errorMessage);
+	Label label = new Label(message);
     Button button = new Button("Back");
     button.setOnAction(new EventHandler<ActionEvent>() {
 		
