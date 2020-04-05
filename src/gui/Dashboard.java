@@ -1,8 +1,10 @@
 package gui;
 
+import java.awt.Scrollbar;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -15,6 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
@@ -23,6 +27,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -50,6 +56,7 @@ import restaurant.table.Table;
 import restaurantReservationSystem.Date;
 import restaurantReservationSystem.Person;
 import xmlHandlers.DishX;
+import xmlHandlers.Reservation;
 import xmlHandlers.Restaurant;
 import xmlHandlers.XMLFileHandler;
 
@@ -423,10 +430,6 @@ public class Dashboard {
 				
 		        mainScreenArea.add(header, 0, 0);
 		        
-		        Order order = new Order();
-				order.setDishes(restaurant.getMenu());
-				customer.setCurrentOrder(order);
-		        
 				TableView<Dish> table = new TableView<>();
 				
 				TableColumn<Dish, String> dishName = new TableColumn<>("Dish");
@@ -596,7 +599,7 @@ public class Dashboard {
         GridPane.setHalignment(logOutButton, HPos.RIGHT);
         
         //buttons functionality
- viewProfileButton.setOnAction(new EventHandler<ActionEvent>() {
+        viewProfileButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
@@ -629,7 +632,7 @@ public class Dashboard {
         stage.show();
 	}
 	
-	public static void showCook(Cook cook, Stage stage) throws FileNotFoundException {
+	public static void showCook(Cook cook, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 
 		
 		stage.setTitle("Dashboard");
@@ -656,9 +659,9 @@ public class Dashboard {
 		orderGrid.setVgap(4);
 		orderGrid.setPadding(new Insets(5, 5, 5, 5));
 		Button viewOrdersButton = new Button("View orders");
-		Button editMenuButton = new Button("Edit Menu");
+		//Button editMenuButton = new Button("Edit Menu");
 		orderGrid.add(viewOrdersButton, 0, 0);
-		orderGrid.add(editMenuButton, 0, 1);
+		//orderGrid.add(editMenuButton, 0, 1);
 		orderPane.setContent(orderGrid);
 		
 		accordion.getPanes().addAll(profilePane, orderPane);
@@ -702,6 +705,50 @@ public class Dashboard {
        				
        		}
        	});
+        viewOrdersButton.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	@Override
+       		public void handle(ActionEvent event) {
+        		
+        		Order order1 = new Order();
+        		order1.setTable(restaurant.getTables().getTables().get(0));
+        		order1.setDishes(restaurant.getMenu());
+        		Order order2 = new Order();
+        		order2.setTable(restaurant.getTables().getTables().get(1));
+        		order2.setDishes(restaurant.getMenu());
+        		List<Order> orders = new ArrayList<>();
+        		orders.add(order1);
+        		orders.add(order2);
+        		Reservation reservation = new Reservation();
+        		reservation.setOrders(orders);
+        		restaurant.setReservations(reservation);
+        		
+       			String string = "";
+       			int x = 0;
+       			for(int i = 0; i < restaurant.getReservations().getOrders().size(); i++) {
+       				string = string.concat("Table number: " + 
+       		        		restaurant.getReservations().getOrders().get(i).getTable().getTableNumber() +
+       		        		"\n");
+        			for(int j = 0; j < restaurant.getReservations().getOrders().get(x).getDishes().size(); j++) {
+        				string = string.concat("\t" + restaurant.getReservations().getOrders().get(x).getDishes().get(j).getName() +
+        						"\n");
+        			}
+        			x++;
+       			}
+       			name.setText("Today's orders:");
+       			
+        		Label info = new Label(string);
+        		info.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+        		
+        		ScrollPane scrollPane = new ScrollPane();
+        		scrollPane.setPrefWidth(200);
+        		scrollPane.setContent(info);
+				
+				mainScreenArea.add(info, 0, 1);
+				mainScreenArea.add(scrollPane, 0, 1);
+       		}
+		});
+        
         //settingsButton
         settingsButton.setOnAction(new EventHandler<ActionEvent>() {
 
