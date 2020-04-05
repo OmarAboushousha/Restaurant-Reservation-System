@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import customers.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,16 +16,31 @@ import restaurant.food.Dish;
 import restaurant.table.Table;
 import restaurantReservationSystem.Time;
 
+@XmlRootElement(name = "order")
+@XmlAccessorType(XmlAccessType.NONE)
 public class Order {
 	
+	@XmlElement(name = "table")
 	private Table table;
+	
+	@XmlElement(name = "dish")
 	private List<Dish> dishes = new ArrayList<>();
+	
+	@XmlElement(name = "customer")
 	private Customer customer;
+	
+	@XmlElement(name = "price")
 	private double price;
-	private LocalDate date;
+	
+	@XmlElement(name = "date")
+	private String date;
+	
+	@XmlElement(name = "time")
 	private  Time time;
+	
+	@XmlElement(name = "paid")
 	private boolean paid;
-	private int orderNumber;
+	
 	
 	public Table getTable() {
 		return table;
@@ -54,11 +74,11 @@ public class Order {
 		this.price = price;
 	}
 
-	public LocalDate getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -78,13 +98,7 @@ public class Order {
 		this.paid = paid;
 	}
 
-	public int getOrderNumber() {
-		return orderNumber;
-	}
 
-	public void setOrderNumber(int orderNumber) {
-		this.orderNumber = orderNumber;
-	}
 
 	public Order reserve()
 	{
@@ -114,5 +128,5 @@ public class Order {
 		this.price = price;
 		return price;
 	}
-	
+
 }

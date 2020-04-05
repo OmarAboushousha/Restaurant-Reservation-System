@@ -3,7 +3,10 @@ package customers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,11 +14,19 @@ import restaurant.Order;
 import restaurant.table.Table;
 import restaurantReservationSystem.Person;
 
+@XmlRootElement(name = "customer")
+@XmlAccessorType(XmlAccessType.NONE)
 public class Customer extends Person {
 
+	@XmlElement(name = "balance")
 	private double balance;
+	
+	@XmlElement(name = "price")
 	private String visaCardNumber;
+	
+	@XmlElement(name = "visa card pin code")
 	private String visaCardPinCode;
+	
 	private Order currentOrder;
 	
 	public Customer(String name, String username, String password) {
@@ -72,23 +83,29 @@ public class Customer extends Person {
 		// TODO Auto-generated method stub
 		return "Customer";
 	}
-
-	//public void checkOut(Order order) {
-		//TODO: code to let user choose method of payment
-		//cash: flag this order as unpaid\
-		//visa: pay() in visa class and flag this order as paid
-		
+	
+	public void calculateBalance(double price) {
+		balance -= price;
 	}
-	
-	/*public Table reserveTable() {
-	//TODO: code to access table class and find a table corresponding to users needs
-	
-	
-}*/
 
-/*public Order makeOrder(Table chosenTable) {
-	//TODO: code to start choosing dishes to add to the order
-}*/
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(balance);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((currentOrder == null) ? 0 : currentOrder.hashCode());
+		result = prime * result + ((visaCardNumber == null) ? 0 : visaCardNumber.hashCode());
+		result = prime * result + ((visaCardPinCode == null) ? 0 : visaCardPinCode.hashCode());
+		return result;
+	}
+
+	
+	
+	
+
+}
 	
 
 

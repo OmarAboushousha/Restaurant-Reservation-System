@@ -54,7 +54,7 @@ public class VisaTransaction {
 					order.setPaid(true);
 					order.setCustomer(customer);
 					customer.setCurrentOrder(order);
-					customer.setBalance(customer.getBalance() - order.getPrice());
+					customer.calculateBalance(order.calculatePrice());
 					restaurant.getReservations().getOrders().add(order);
 					AlertBox.display("Payment Successful");
 					mainScreenArea.getChildren().clear();

@@ -184,6 +184,7 @@ public class LoginScreen {
 			
 				
 		} catch (JAXBException e) {
+			e.printStackTrace();
 			FileLoadError.display();
 		}
 	}

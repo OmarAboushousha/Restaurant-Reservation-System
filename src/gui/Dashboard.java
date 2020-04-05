@@ -2,7 +2,11 @@ package gui;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+<<<<<<< HEAD
 import java.time.LocalDate;
+=======
+import java.time.format.DateTimeFormatter;
+>>>>>>> 63a8d3674d50f8c41e00bb3a10927ebe263946b4
 import java.util.ArrayList;
 import java.util.List;
 
@@ -223,7 +227,13 @@ public class Dashboard {
 			@Override
 			public void handle(ActionEvent arg0) {
 				person.setName(textField.getText());
+<<<<<<< HEAD
 				editWindow.close();		
+=======
+				System.out.println(person.getName());
+				editWindow.close();
+				
+>>>>>>> 63a8d3674d50f8c41e00bb3a10927ebe263946b4
 			}
 		});	
 		vbox.setAlignment(Pos.BASELINE_CENTER);
@@ -604,6 +614,13 @@ public class Dashboard {
 	
 	public static void showCustomer(Customer customer, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 		
+		
+		//loading last order for customer
+		for(Order order: restaurant.getReservations().getOrders()) {
+			if (order.getCustomer().getUsername().equals(customer.getUsername())) 
+				customer.setCurrentOrder(order);
+		}
+		
 		//Layout
 		
 		stage.setTitle("Dashboard");
@@ -700,6 +717,7 @@ public class Dashboard {
 				
 		        mainScreenArea.add(header, 0, 0);
 		        
+<<<<<<< HEAD
 		        try {          
 					TableView<Dish> table = new TableView<>();
 					
@@ -716,6 +734,34 @@ public class Dashboard {
 					table.getColumns().add(dishPrice);
 					
 					mainScreenArea.add(table, 0, 1);	
+=======
+		        try {
+		        
+
+		       
+				TableView<Dish> table = new TableView<>();
+				
+				TableColumn<Dish, String> dishName = new TableColumn<>("Dish");
+				dishName.setMinWidth(200);
+				dishName.setCellValueFactory(new PropertyValueFactory<>("name"));
+				
+				TableColumn<Dish, Double> dishPrice = new TableColumn<>("Price");
+				dishPrice.setMinWidth(100);
+				dishPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+				
+				table.setItems(customer.getCurrentOrder().retrieveDishes());
+				table.getColumns().add(dishName);
+				table.getColumns().add(dishPrice);
+				
+				mainScreenArea.add(table, 0, 1, 1, 5);
+				mainScreenArea.add(new Label("Date: " + customer.getCurrentOrder().getDate()), 1, 1);
+				mainScreenArea.add(new Label("Time: " + customer.getCurrentOrder().getTime()), 1, 2);
+				mainScreenArea.add(new Label("Table Number:" + customer.getCurrentOrder().getTable().getTableNumber()), 1, 3);
+				mainScreenArea.add(new Label("Price: " + customer.getCurrentOrder().getPrice()), 1, 4);
+				
+				
+				
+>>>>>>> 63a8d3674d50f8c41e00bb3a10927ebe263946b4
 		        } catch (NullPointerException e) {
 		        	mainScreenArea.add(new Label("You have no recent orders"), 0, 1);
 		        }
@@ -770,6 +816,7 @@ public class Dashboard {
 				}
 				else {
 				
+<<<<<<< HEAD
 					selectButton.setOnAction(new EventHandler<ActionEvent>() {
 	
 						@Override
@@ -793,6 +840,29 @@ public class Dashboard {
 								}
 							} catch(NumberFormatException e) {
 								message.setText("Please choose a valid time");
+=======
+				selectButton.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent event) {
+						//TODO: add to customer's order this table
+						try {
+							
+							Time time = new Time(Integer.parseInt(hourTxt.getText()),Integer.parseInt(minTxt.getText().toString()));
+							if(availableTables.getValue() != null && time.getHour() != 0 && time.getMinute() != 0 && datePicker.getValue() != null) {
+								
+								order.setDate(datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+								order.setTime(time);
+								order.setTable(availableTables.getValue());
+								order.getTable().setAvailable(false);
+								//TODO: redirect to selecting dishes
+								viewCustomerMenu(order, mainScreenArea, restaurant, customer);
+								
+								//TODO: redirect to selecting dishes
+								
+							} else {
+								message.setText("Please fill in all\ninformation correctly");
+>>>>>>> 63a8d3674d50f8c41e00bb3a10927ebe263946b4
 								message.setTextFill(Color.web("#ff0000", 0.8));
 							}
 						}
@@ -843,7 +913,26 @@ public class Dashboard {
 				});		
 			}
 		});
+<<<<<<< HEAD
           
+=======
+        
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					XMLFileHandler.saveFile(restaurant, "Data.xml");
+				} catch (JAXBException e) {
+					// TODO Auto-generated catch block
+					AlertBox.display("Error saving file!");
+					e.printStackTrace();
+				}
+				
+			}
+		});
+        
+>>>>>>> 63a8d3674d50f8c41e00bb3a10927ebe263946b4
         Scene scene = new Scene(border, 700, 500);
         
         stage.setScene(scene);
@@ -1018,6 +1107,21 @@ public class Dashboard {
 			}
         });
         
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					XMLFileHandler.saveFile(restaurant, "Data.xml");
+				} catch (JAXBException e) {
+					// TODO Auto-generated catch block
+					AlertBox.display("Error saving file!");
+					e.printStackTrace();
+				}
+				
+			}
+		});
+        
         Scene scene = new Scene(border, 700, 500);
         
         stage.setScene(scene);
@@ -1158,6 +1262,21 @@ public class Dashboard {
        				
        		}
         });
+        
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					XMLFileHandler.saveFile(restaurant, "Data.xml");
+				} catch (JAXBException e) {
+					// TODO Auto-generated catch block
+					AlertBox.display("Error saving file!");
+					e.printStackTrace();
+				}
+				
+			}
+		});
         
         Scene scene = new Scene(border, 700, 500);
         
@@ -1318,6 +1437,21 @@ public class Dashboard {
        				
        		}
         });
+        
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					XMLFileHandler.saveFile(restaurant, "Data.xml");
+				} catch (JAXBException e) {
+					// TODO Auto-generated catch block
+					AlertBox.display("Error saving file!");
+					e.printStackTrace();
+				}
+				
+			}
+		});
         
         Scene scene = new Scene(border, 700, 500);
         
