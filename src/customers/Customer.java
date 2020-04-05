@@ -31,6 +31,10 @@ public class Customer extends Person {
 		this.currentOrder = currentOrder;
 	}
 	
+	public Customer() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Order getCurrentOrder() {
 		return currentOrder;
 	}
@@ -62,8 +66,14 @@ public class Customer extends Person {
 	public void setVisaCardPinCode(String visaCardPinCode) {
 		this.visaCardPinCode = visaCardPinCode;
 	}	
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Customer";
+	}
 
-	public void checkOut(Order order) {
+	//public void checkOut(Order order) {
 		//TODO: code to let user choose method of payment
 		//cash: flag this order as unpaid\
 		//visa: pay() in visa class and flag this order as paid
@@ -80,4 +90,5 @@ public class Customer extends Person {
 	//TODO: code to start choosing dishes to add to the order
 }*/
 	
-}
+
+

@@ -886,7 +886,7 @@ public class Dashboard {
 	
 	
 	
-	public static void showManager(Manager manager, Stage stage) throws FileNotFoundException {
+	public static void showManager(Manager manager, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 		
 		stage.setTitle("Dashboard");
 		BorderPane border = new BorderPane();
@@ -1143,7 +1143,7 @@ public class Dashboard {
         stage.show();
 	}
 	
-	public static void showWaiter(Waiter waiter, Stage stage) throws FileNotFoundException {
+	public static void showWaiter(Waiter waiter, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 		
 		stage.setTitle("Dashboard");
 		BorderPane border = new BorderPane();

@@ -75,6 +75,7 @@ public class LoginScreen {
 				}
 			});
 			Button loginButton = new Button("Log in");
+			Button signUpButton = new Button("Sign up");
 			
 			loginButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -93,24 +94,22 @@ public class LoginScreen {
 									Manager manager = new Manager(person.getName(),
 											person.getUsername(), person.getPassword());
 									try {
-										Dashboard.showManager(manager, loginScreen);
+										Dashboard.showManager(manager, loginScreen, restaurant);
 									} catch (FileNotFoundException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+										AlertBox.display("Unexpected Error!");
 									}
-									loginScreen.setTitle("Manager Dashboard");
+									
 																	
 								}
 								if(person instanceof Waiter) {
 									Waiter waiter = new Waiter(person.getName(), person.getUsername(),
 											person.getPassword());
 									try {
-										Dashboard.showWaiter(waiter, loginScreen);
+										Dashboard.showWaiter(waiter, loginScreen, restaurant);
 									} catch (FileNotFoundException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+										AlertBox.display("Unexpected Error!");
 									}
-									loginScreen.setTitle("Waiter Dashboard");
+									
 									
 								}
 								if(person instanceof Cook) {
@@ -119,10 +118,9 @@ public class LoginScreen {
 									try {
 										Dashboard.showCook(cook, loginScreen, restaurant);
 									} catch (FileNotFoundException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+										AlertBox.display("Unexpected Error!");
 									}
-									loginScreen.setTitle("Cook Dashboard");
+									
 									
 									
 								}
@@ -137,16 +135,17 @@ public class LoginScreen {
 								try {
 									Dashboard.showCustomer(customer, loginScreen, restaurant);
 								} catch (FileNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+									AlertBox.display("Unexpected Error!");
 								}
-								loginScreen.setTitle("Customer Dashboard");
+								
 							}
 							else AlertBox.display("Please choose correct type of user.");
 						} else AlertBox.display("Please choose correct type of user.");
 					}
 				}
 			});
+			
+			
 			
 			GridPane grid = new GridPane();
 			grid.setPadding(new Insets(100, 100, 100, 125));
@@ -162,10 +161,21 @@ public class LoginScreen {
 	        grid.add(customerUser, 1, 4);
 	        grid.add(staffUser, 1, 4);
 	        grid.add(loginButton, 1, 6);
+	        grid.add(signUpButton, 1, 6);
 	        
 	        GridPane.setHalignment(customerUser, HPos.RIGHT);
 	        GridPane.setHalignment(staffUser, HPos.LEFT);
 	        GridPane.setHalignment(loginButton, HPos.RIGHT);
+	        GridPane.setHalignment(signUpButton, HPos.LEFT);
+	        
+	        signUpButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					SignUpScreen.displaySignUpScreen(grid, restaurant, loginScreen);
+					
+				}
+			});
 	         
 	        Scene scene = new Scene(grid, 600, 500);
 	        

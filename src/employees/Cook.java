@@ -5,6 +5,12 @@ import restaurant.food.Dish;
 
 public class Cook extends Employee {
 	
+	private static final String cookCode = "cook_code";
+	
+	public static String getCookCode() {
+		return cookCode;
+	}
+
 	public Cook(String name, String username, String password) {
 		super(name, username, password);
 	}
@@ -27,5 +33,11 @@ public class Cook extends Employee {
 	public Order seeOrder(int orderNumber) {
 		// TODO: cook is not allowed to see customer's name or price of order
 		return null;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Cook";
 	}
 }
