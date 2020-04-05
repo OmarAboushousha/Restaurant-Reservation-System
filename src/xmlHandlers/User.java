@@ -29,13 +29,15 @@ public class User {
 	@XmlElement(name = "order")
 	private Order order;
 	
-	@XmlElement(name = "card_number")
+	@XmlElement(name = "cardNumber")
 	private String visaCardNumber;
 	
-	@XmlElement(name = "pin_code")
+	@XmlElement(name = "pinCode")
 	private String visaCardPinCode;
 	
-	public User() {}
+	public User() {
+		
+	}
 
 	public User(String name, String username, String password, String role, double balance, Order order,
 			String visaCardNumber, String visaCardPinCode) {

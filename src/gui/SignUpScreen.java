@@ -4,6 +4,8 @@ package gui;
 
 import java.io.FileNotFoundException;
 
+import javax.xml.bind.JAXBException;
+
 import customers.Customer;
 import employees.Cook;
 import employees.Manager;
@@ -26,6 +28,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import restaurantReservationSystem.Person;
 import xmlHandlers.Restaurant;
+import xmlHandlers.XMLFileHandler;
 
 public class SignUpScreen {
 
@@ -43,6 +46,7 @@ public class SignUpScreen {
 		userTypeChoice.setItems(usersList);;
 		userTypeChoice.setPromptText("Account Type");
 		Button signUpButton = new Button ("Sign up");
+		Button cancelButton = new Button("Cancel");
 		
 		grid.add(new Label("Enter Name"), 0, 0);
 		grid.add(new Label("Enter Username"), 0, 1);
@@ -57,6 +61,7 @@ public class SignUpScreen {
 		grid.add(userTypeChoice, 1, 4);
 		
 		grid.add(signUpButton, 1, 5);
+		grid.add(cancelButton, 0, 5);
 		
 		signUpButton.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -83,8 +88,9 @@ public class SignUpScreen {
 					Customer customer = (Customer) userTypeChoice.getValue();
 					restaurant.getPersons().add(customer);
 					try {
+						XMLFileHandler.saveFile(restaurant, "Data.xml");
 						Dashboard.showCustomer(customer, signUpStage, restaurant);
-					} catch (FileNotFoundException e) {
+					} catch (FileNotFoundException | JAXBException e) {
 						// TODO Auto-generated catch block
 						AlertBox.display("Unexpected Error!");;
 					}
@@ -104,7 +110,14 @@ public class SignUpScreen {
 		});
 		
 		
-		
+		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				LoginScreen.loginScreen(signUpStage);
+				
+			}
+		});
 		
 		
 	}
@@ -128,8 +141,9 @@ public class SignUpScreen {
 						Manager manager = (Manager) person;
 						restaurant.getPersons().add(manager);
 						try {
+							XMLFileHandler.saveFile(restaurant, "Data.xml");
 							Dashboard.showManager(manager, signUpStage, restaurant, restaurant.getReservations());
-						} catch (FileNotFoundException e) {
+						} catch (FileNotFoundException | JAXBException e) {
 							// TODO Auto-generated catch block
 							AlertBox.display("Unexpected Error!");
 						}						
@@ -137,8 +151,9 @@ public class SignUpScreen {
 						Cook cook = (Cook) person;
 						restaurant.getPersons().add(cook);
 						try {
+							XMLFileHandler.saveFile(restaurant, "Data.xml");
 							Dashboard.showCook(cook, signUpStage, restaurant, restaurant.getReservations());
-						} catch (FileNotFoundException e) {
+						} catch (FileNotFoundException | JAXBException e) {
 							// TODO Auto-generated catch block
 							AlertBox.display("Unexpected Error!");
 						}							
@@ -146,8 +161,9 @@ public class SignUpScreen {
 						Waiter waiter = (Waiter) person;
 						restaurant.getPersons().add(waiter);
 						try {
+							XMLFileHandler.saveFile(restaurant, "Data.xml");
 							Dashboard.showWaiter(waiter, signUpStage, restaurant, restaurant.getReservations());
-						} catch (FileNotFoundException e) {
+						} catch (FileNotFoundException | JAXBException e) {
 							// TODO Auto-generated catch block
 							AlertBox.display("Unexpected Error!");
 						}							

@@ -43,7 +43,7 @@ import xmlHandlers.XMLFileHandler;
 public class LoginScreen {
 	public static void loginScreen(Stage loginScreen) {
 		try {
-			
+
 			Restaurant restaurant = XMLFileHandler.LoadFile("Data.xml");
 
 			loginScreen.setTitle("Login");
@@ -59,16 +59,16 @@ public class LoginScreen {
 			passwordInput.setPromptText("password");
 			RadioButton customerUser = new RadioButton("Customer");
 			RadioButton staffUser = new RadioButton("Staff");
-			
+
 			customerUser.setOnAction(new EventHandler<ActionEvent>() {
-				
+
 				@Override
 				public void handle(ActionEvent event) {
 					staffUser.setSelected(false);
 				}
 			});
 			staffUser.setOnAction(new EventHandler<ActionEvent>() {
-				
+
 				@Override
 				public void handle(ActionEvent event) {
 					customerUser.setSelected(false);	
@@ -76,17 +76,18 @@ public class LoginScreen {
 			});
 			Button loginButton = new Button("Log in");
 			Button signUpButton = new Button("Sign up");
-			
+
 			loginButton.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
 				public void handle(ActionEvent event) {
 					Person person;
-					person = Person.login(usernameInput.getText(), passwordInput.getText(), restaurant);
-					
-					if(person == null)
+					int index = Person.login(usernameInput.getText(), passwordInput.getText(), restaurant);
+
+					if(index == -1)
 						AlertBox.display("Invalid username or password.");
 					else {
+						person = restaurant.getPersons().get(index);
 						if(staffUser.isSelected()) {
 							if (person instanceof Employee) {
 								//TODO: redirect to staff type dashboard
@@ -98,8 +99,8 @@ public class LoginScreen {
 									} catch (FileNotFoundException e) {
 										AlertBox.display("Unexpected Error!");
 									}
-									
-																	
+
+
 								}
 								if(person instanceof Waiter) {
 									Waiter waiter = new Waiter(person.getName(), person.getUsername(),
@@ -109,8 +110,8 @@ public class LoginScreen {
 									} catch (FileNotFoundException e) {
 										AlertBox.display("Unexpected Error!");
 									}
-									
-									
+
+
 								}
 								if(person instanceof Cook) {
 									Cook cook = new Cook(person.getName(), person.getUsername(),
@@ -120,9 +121,9 @@ public class LoginScreen {
 									} catch (FileNotFoundException e) {
 										AlertBox.display("Unexpected Error!");
 									}
-									
-									
-									
+
+
+
 								}
 							}
 							else AlertBox.display("Please choose correct type of user.");
@@ -137,58 +138,58 @@ public class LoginScreen {
 								} catch (FileNotFoundException e) {
 									AlertBox.display("Unexpected Error!");
 								}
-								
+
 							}
 							else AlertBox.display("Please choose correct type of user.");
 						} else AlertBox.display("Please choose correct type of user.");
 					}
 				}
 			});
-			
-			
-			
+
+
+
 			GridPane grid = new GridPane();
 			grid.setPadding(new Insets(100, 100, 100, 125));
-	        grid.setVgap(8);
-	        grid.setHgap(10);
-	        
-	        grid.add(restaurantName, 0, 0, 2, 1);
-	        grid.add(loginLabel, 0, 1);
-	        grid.add(username, 0, 2);
-	        grid.add(password, 0, 3);
-	        grid.add(usernameInput, 1, 2);
-	        grid.add(passwordInput, 1, 3);
-	        grid.add(customerUser, 1, 4);
-	        grid.add(staffUser, 1, 4);
-	        grid.add(loginButton, 1, 6);
-	        grid.add(signUpButton, 1, 6);
-	        
-	        GridPane.setHalignment(customerUser, HPos.RIGHT);
-	        GridPane.setHalignment(staffUser, HPos.LEFT);
-	        GridPane.setHalignment(loginButton, HPos.RIGHT);
-	        GridPane.setHalignment(signUpButton, HPos.LEFT);
-	        
-	        signUpButton.setOnAction(new EventHandler<ActionEvent>() {
+			grid.setVgap(8);
+			grid.setHgap(10);
+
+			grid.add(restaurantName, 0, 0, 2, 1);
+			grid.add(loginLabel, 0, 1);
+			grid.add(username, 0, 2);
+			grid.add(password, 0, 3);
+			grid.add(usernameInput, 1, 2);
+			grid.add(passwordInput, 1, 3);
+			grid.add(customerUser, 1, 4);
+			grid.add(staffUser, 1, 4);
+			grid.add(loginButton, 1, 6);
+			grid.add(signUpButton, 1, 6);
+
+			GridPane.setHalignment(customerUser, HPos.RIGHT);
+			GridPane.setHalignment(staffUser, HPos.LEFT);
+			GridPane.setHalignment(loginButton, HPos.RIGHT);
+			GridPane.setHalignment(signUpButton, HPos.LEFT);
+
+			signUpButton.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
 				public void handle(ActionEvent event) {
 					SignUpScreen.displaySignUpScreen(grid, restaurant, loginScreen);
-					
+
 				}
 			});
-	         
-	        Scene scene = new Scene(grid, 600, 500);
-	        
-	        loginScreen.setScene(scene);
-	        loginScreen.show();
-			
-				
+
+			Scene scene = new Scene(grid, 600, 500);
+
+			loginScreen.setScene(scene);
+			loginScreen.show();
+
+
 		} catch (JAXBException e) {
 			e.printStackTrace();
 			FileLoadError.display();
 		}
 	}
 }
-	
+
 
 

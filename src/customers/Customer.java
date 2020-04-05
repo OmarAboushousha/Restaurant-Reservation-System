@@ -21,10 +21,10 @@ public class Customer extends Person {
 	@XmlElement(name = "balance")
 	private double balance;
 	
-	@XmlElement(name = "price")
+	@XmlElement(name = "visaCardNum")
 	private String visaCardNumber;
 	
-	@XmlElement(name = "visa card pin code")
+	@XmlElement(name = "visaCardPin")
 	private String visaCardPinCode;
 	
 	private Order currentOrder;

@@ -44,14 +44,15 @@ public abstract class Person {
 		super();
 	}
 
-	public static Person login(String usernameInput, String passwordInput, Restaurant restaurant)
+	public static int login(String usernameInput, String passwordInput, Restaurant restaurant)
 	{
-		for(Person person: restaurant.getPersons())
+		for(int i = 0; i < restaurant.getPersons().size(); i++)
 		{
-			if(person.username.equals(usernameInput) && person.password.equals(passwordInput))
-				return person;
+			if(restaurant.getPersons().get(i).username.equals(usernameInput) 
+					&& restaurant.getPersons().get(i).password.equals(passwordInput))
+				return i;
 		}
-		return null;
+		return -1;
 	}
 	
 }
