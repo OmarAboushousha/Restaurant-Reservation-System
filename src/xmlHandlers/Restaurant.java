@@ -9,12 +9,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-<<<<<<< HEAD
 import restaurant.food.Appetizers;
 import restaurant.food.Dessert;
-=======
 import restaurant.Order;
->>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
+import restaurant.Order;
 import restaurant.food.Dish;
 import restaurant.food.MainCourse;
 import restaurant.table.Table;

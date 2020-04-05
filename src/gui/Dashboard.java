@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
+import javax.xml.bind.JAXBException;
+
 import customers.Customer;
 import employees.Cook;
 import employees.Manager;
@@ -21,13 +23,18 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-<<<<<<< HEAD
+
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-=======
+
 import javafx.scene.control.ComboBox; 
 import javafx.scene.control.Button;
->>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
+
+import javafx.scene.control.ComboBox;
+
+import javafx.scene.control.ComboBox; 
+import javafx.scene.control.Button;
+
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
@@ -54,24 +61,30 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import restaurant.Order;
-<<<<<<< HEAD
+
 import restaurant.food.Appetizers;
 import restaurant.food.Dish;
 import restaurant.food.MainCourse;
-=======
+
 import restaurant.food.Dish;
->>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
+
+import restaurant.food.Dish;
+
 import restaurant.table.Table;
 import restaurantReservationSystem.Person;
-<<<<<<< HEAD
+
 import restaurantReservationSystem.Time;
+
 import xmlHandlers.DishX;
 import xmlHandlers.Restaurant;
-=======
+
 import xmlHandlers.DishX;
+
 import xmlHandlers.Restaurant;
 import xmlHandlers.XMLFileHandler;
->>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
+
+import xmlHandlers.XMLFileHandler;
+
 
 public class Dashboard {
 	
@@ -239,6 +252,8 @@ public class Dashboard {
 		
 	}
 
+
+
 	private static void editPasswordField(Person person) {
 	
 		Stage editWindow = new Stage();
@@ -341,7 +356,6 @@ public class Dashboard {
 		logoutConfirm.showAndWait();
 	}
 
-<<<<<<< HEAD
 
 	private static void viewCustomerMenu(Order order, GridPane mainScreenArea, Restaurant restaurant, Customer customer) {
 		
@@ -465,7 +479,9 @@ public class Dashboard {
 			    return selected;
 	}
 	
-	private static void checkOut(Customer customer, Order order, GridPane mainScreenArea, ObservableList<Dish> appetizers, ObservableList<Dish> mainCourse, ObservableList<Dish> desserts, ObservableList<Dish> drinks) {
+	private static void checkOut(Customer customer, Order order, GridPane mainScreenArea, 
+			ObservableList<Dish> appetizers, ObservableList<Dish> mainCourse,
+				ObservableList<Dish> desserts, ObservableList<Dish> drinks) {
 		
 		ObservableList<Dish> customerSelection = FXCollections.observableArrayList();
 		
@@ -547,7 +563,6 @@ public class Dashboard {
 			}
 		});
 		
-
         
         mainScreenArea.add(header, 0, 0);
         mainScreenArea.add(tableNum, 0, 1);
@@ -567,8 +582,7 @@ public class Dashboard {
 		return false;
 	}
 
-=======
->>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
+
 	public static void showCustomer(Customer customer, Stage stage, Restaurant restaurant) throws FileNotFoundException {
 		
 		//Layout
@@ -689,10 +703,7 @@ public class Dashboard {
 				mainScreenArea.add(table, 0, 1);		
 			}
 		});
-<<<<<<< HEAD
 
-=======
->>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
         //makeNewOrderButton
         makeNewOrderButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -768,19 +779,12 @@ public class Dashboard {
 						
 						
 					}
-<<<<<<< HEAD
 				});
 				
 				}
-				
-			}
-		});
+				}
+			});	
 
-=======
-				});	
-			}
-		});
->>>>>>> 7311d950914a41105a1adb07b2ee67d06e253b07
         //logOutButton
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1021,10 +1025,17 @@ public class Dashboard {
        		@Override
        		public void handle(ActionEvent event) {
        			showSettings(cook, mainScreenArea);
-       				
+       			}
+       		});
+               //settingsButton
+               settingsButton.setOnAction(new EventHandler<ActionEvent>() {
+
+       			@Override
+       			public void handle(ActionEvent event) {
+       				showSettings(cook, mainScreenArea);
        		}
-        });
-               
+       	});
+   
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
        		@Override
@@ -1105,7 +1116,6 @@ public class Dashboard {
        		@Override
        		public void handle(ActionEvent event) {
        			showProfile(waiter, mainScreenArea);
-       				
        		}
        	});
       //settingsButton
@@ -1114,7 +1124,14 @@ public class Dashboard {
        		@Override
        		public void handle(ActionEvent event) {
        			showSettings(waiter, mainScreenArea);
-       				
+       			}
+       		});
+               //settingsButton
+               settingsButton.setOnAction(new EventHandler<ActionEvent>() {
+
+       			@Override
+       			public void handle(ActionEvent event) {
+       				showSettings(waiter, mainScreenArea);	
        		}
         });
                
