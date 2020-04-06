@@ -11,17 +11,17 @@ public class Dish {
 
 	@XmlElement(name = "name")
 	private String name;
-	
+
 	@XmlElement(name = "price")
 	private double price;
-	
+
 	@XmlElement(name = "tax")
 	private double tax;
-	
+
 	public Dish() {
 		super();
 	}
-	
+
 	public Dish(String name, double price) {
 		this.name = name;
 		this.price = price;
@@ -44,7 +44,7 @@ public class Dish {
 	public void setTax(double d) {
 		this.tax = d;
 	}
-	
+
 	@Override
 	public String toString() {
 

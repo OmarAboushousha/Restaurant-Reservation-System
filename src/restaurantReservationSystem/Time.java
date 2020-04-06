@@ -13,19 +13,13 @@ public class Time {
 
 	@XmlElement(name = "hour")
 	private int hour;
-	
+
 	@XmlElement(name = "minute")
 	private int minute;
-	
+
 	public Time(int hour, int minute) {
 		setHour(hour);
 		setMinute(minute);
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return hour + ":" + minute;
 	}
 
 	public int getHour() {
@@ -44,6 +38,11 @@ public class Time {
 	public void setMinute(int minute) {
 		if  (minute >= 0 && minute < 60)
 			this.minute = minute;
+	}
+	
+	@Override
+	public String toString() {
+		return hour + ":" + minute;
 	}
 
 }

@@ -1,8 +1,5 @@
 package employees;
 
-import restaurant.Order;
-import restaurant.food.Dish;
-
 public class Cook extends Employee {
 	
 	private static final String cookCode = "cook_code";
@@ -22,7 +19,6 @@ public class Cook extends Employee {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "Cook";
 	}
 }

@@ -3,7 +3,6 @@ package xmlHandlers;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.plaf.basic.BasicBorders.MarginBorder;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -13,7 +12,6 @@ import customers.Customer;
 import employees.Cook;
 import employees.Manager;
 import employees.Waiter;
-import gui.Main;
 import restaurant.food.Drinks;
 import restaurant.food.MainCourse;
 import restaurantReservationSystem.Person;

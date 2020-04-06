@@ -1,38 +1,32 @@
 package customers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import restaurant.Order;
-import restaurant.table.Table;
 import restaurantReservationSystem.Person;
 
-@XmlRootElement(name = "customer")
+@XmlRootElement(name = "customer") 
 @XmlAccessorType(XmlAccessType.NONE)
 public class Customer extends Person {
 
 	@XmlElement(name = "balance")
 	private double balance;
-	
+
 	@XmlElement(name = "visaCardNum")
 	private String visaCardNumber;
-	
+
 	@XmlElement(name = "visaCardPin")
 	private String visaCardPinCode;
-	
+
 	private Order currentOrder;
-	
+
 	public Customer(String name, String username, String password) {
 		super(name, username, password);
 	}
-	
+
 	public Customer(String name, String username, String password, double d, String visaCardNumber,
 			String visaCardPinCode, Order currentOrder) {
 		super(name, username, password);
@@ -41,9 +35,9 @@ public class Customer extends Person {
 		this.visaCardPinCode = visaCardPinCode;
 		this.currentOrder = currentOrder;
 	}
-	
+
 	public Customer() {
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	public Order getCurrentOrder() {
@@ -77,13 +71,12 @@ public class Customer extends Person {
 	public void setVisaCardPinCode(String visaCardPinCode) {
 		this.visaCardPinCode = visaCardPinCode;
 	}	
-	
+
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "Customer";
 	}
-	
+
 	public void calculateBalance(double price) {
 		balance -= price;
 	}
@@ -101,11 +94,11 @@ public class Customer extends Person {
 		return result;
 	}
 
-	
-	
-	
+
+
+
 
 }
-	
+
 
 

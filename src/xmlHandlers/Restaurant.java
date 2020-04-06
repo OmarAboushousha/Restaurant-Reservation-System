@@ -12,33 +12,33 @@ import javafx.collections.ObservableList;
 import restaurant.food.Appetizers;
 import restaurant.food.Dessert;
 import restaurant.Order;
-import restaurant.Order;
 import restaurant.food.Dish;
 import restaurant.food.MainCourse;
 import restaurant.table.Table;
 import restaurantReservationSystem.Person;
+
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "restaurant")
 public class Restaurant {
-	
+
 	@XmlElement(name = "users")
 	private Users users;
-	
+
 	@XmlElement(name = "tables")
 	private Tables tables;
-	
+
 	@XmlElement(name = "dishes")
 	private Dishes dishes;
-	
+
 	@XmlElement(name = "reviews")
 	private Review reviews = new Review();
-	
+
 	@XmlElement(name = "reservations")
 	private Reservation reservations = new Reservation();
-	
+
 	List<Person> persons;
 	List<Dish> menu;
-	
+
 	public Review getReviews() {
 		return reviews;
 	}
@@ -86,7 +86,7 @@ public class Restaurant {
 	public void setMenu(List<Dish> menu) {
 		this.menu = menu;
 	}
-	
+
 	public Reservation getReservations() {
 		return reservations;
 	}
@@ -103,8 +103,8 @@ public class Restaurant {
 			}
 		}
 		return list;
-		
-		
+
+
 	}
 	public ObservableList<Dish> retrieveDish(String menuType) {
 		ObservableList<Dish> list = FXCollections.observableArrayList();
@@ -137,7 +137,7 @@ public class Restaurant {
 		}
 		return list;
 	}
-	
+
 	public ObservableList<Order> retrieveOrders() {
 		ObservableList<Order> list = FXCollections.observableArrayList();
 		for(int i = 0; i < reservations.getOrders().size(); i++) {

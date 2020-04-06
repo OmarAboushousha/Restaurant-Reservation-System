@@ -1,15 +1,13 @@
 package restaurantReservationSystem;
 
-import gui.Main;
 import xmlHandlers.Restaurant;
-import xmlHandlers.User;
 
 public abstract class Person {
-	
+
 	private String name;
 	private String username;
 	private String password;
-	
+
 	public String getName() {
 		return name;
 	}
@@ -39,7 +37,7 @@ public abstract class Person {
 		this.username = username;
 		this.password = password;
 	}
-	
+
 	public Person() {
 		super();
 	}
@@ -54,5 +52,5 @@ public abstract class Person {
 		}
 		return -1;
 	}
-	
+
 }

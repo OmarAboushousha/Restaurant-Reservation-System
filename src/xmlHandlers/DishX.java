@@ -8,7 +8,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "dish")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DishX {
-	DishX() {}
+	DishX() {
+		
+	}
 	public DishX(String name, double price, String type) {
 		this.name = name;
 		this.price = price;
@@ -17,10 +19,10 @@ public class DishX {
 
 	@XmlElement(name = "name")
 	private String name;
-	
+
 	@XmlElement(name = "price")
 	private double price; 
-	
+
 	@XmlElement(name = "type")
 	private String type;
 

@@ -13,7 +13,7 @@ import restaurant.Order;
 @XmlRootElement(name = "reservations")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Reservation {
-	
+
 	@XmlElement(name = "orders")
 	private List<Order> orders = new ArrayList<>();
 

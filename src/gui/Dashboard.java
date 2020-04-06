@@ -1,13 +1,8 @@
 package gui;
 
-import java.awt.HeadlessException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -21,9 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -31,18 +23,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 
-import javafx.scene.control.ComboBox; 
-import javafx.scene.control.Button;
-
-import javafx.scene.control.ComboBox;
-
-import javafx.scene.control.ComboBox; 
-import javafx.scene.control.Button;
-
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -58,37 +41,21 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import restaurant.Order;
 
-import restaurant.food.Appetizers;
 import restaurant.food.Dish;
-import restaurant.food.MainCourse;
-
-import restaurant.food.Dish;
-
-import restaurant.food.Dish;
-
 import restaurant.table.Table;
 import restaurantReservationSystem.Person;
 
 import restaurantReservationSystem.Time;
 
-import xmlHandlers.DishX;
-import xmlHandlers.Reservation;
 import xmlHandlers.Restaurant;
-
-import xmlHandlers.DishX;
-
-import xmlHandlers.Restaurant;
-import xmlHandlers.XMLFileHandler;
 
 import xmlHandlers.XMLFileHandler;
 
@@ -493,7 +460,7 @@ public class Dashboard {
 
 			}
 		});
-		
+
 		//Visa button
 		visaButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -505,13 +472,13 @@ public class Dashboard {
 				Label visaCardNumber = new Label("Enter Visa Card Number");
 				Label pinLbl = new Label("Enter your PIN code");
 				Label balanceLbl = new Label("Enter current balance");
-				
+
 				TextField visaCardNumberTxt = new TextField();
 				PasswordField pinTxt = new PasswordField();
 				TextField balanceTxt = new TextField();
-				
+
 				Button doneButton = new Button("Done");
-				
+
 				mainScreenArea.add(header, 0, 0);
 				mainScreenArea.add(visaCardNumber, 0, 1);
 				mainScreenArea.add(pinLbl, 0, 2);
@@ -520,7 +487,7 @@ public class Dashboard {
 				mainScreenArea.add(pinTxt, 1, 2);
 				mainScreenArea.add(balanceTxt, 1, 3);
 				mainScreenArea.add(doneButton, 1, 4);
-				
+
 				doneButton.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
@@ -535,8 +502,8 @@ public class Dashboard {
 				});
 			}
 		});
-		
-		//viewOrderButton
+
+		//view Order Button
 		viewOrderButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -626,7 +593,7 @@ public class Dashboard {
 
 						@Override
 						public void handle(ActionEvent event) {
-							//TODO: add to customer's order this table
+							//add to customer's order this table
 
 							Time time = new Time(Integer.parseInt(hourTxt.getText()),Integer.parseInt(minTxt.getText().toString()));
 							if(availableTables.getValue() != null && time.getHour() != 0 && time.getMinute() != 0 && datePicker.getValue() != null) {
@@ -635,10 +602,10 @@ public class Dashboard {
 								order.setTime(time);
 								order.setTable(availableTables.getValue());
 								order.getTable().setAvailable(false);
-								//TODO: redirect to selecting dishes
+								//redirect to selecting dishes
 								viewCustomerMenu(order, mainScreenArea, restaurant, customer);
 
-								//TODO: redirect to selecting dishes
+								//redirect to selecting dishes
 
 							} else {
 								message.setText("Please fill in all\ninformation correctly");
@@ -700,7 +667,7 @@ public class Dashboard {
 				try {
 					XMLFileHandler.saveFile(restaurant, "Data.xml");
 				} catch (JAXBException e) {
-					// TODO Auto-generated catch block
+					// Auto-generated catch block
 					AlertBox.display("Error saving file!");
 					e.printStackTrace();
 				}
@@ -713,11 +680,11 @@ public class Dashboard {
 		stage.setScene(scene);
 		stage.show();
 	}
-	
-	
-	
+
+
+
 	public static void showManager(Manager manager, Stage stage, Restaurant restaurant) throws FileNotFoundException {
-		
+
 		stage.setTitle("Dashboard");
 		BorderPane border = new BorderPane();
 		Accordion accordion = new Accordion();
@@ -795,65 +762,65 @@ public class Dashboard {
 
 				mainScreenArea.getChildren().clear();
 
-       			Label header = new Label("Today's reservations:");
+				Label header = new Label("Today's reservations:");
 				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-       			
-        		Label info = new Label();
-        		info.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
-        		
-        		String string = "";
-        		
-        		for(int i = 0; i < restaurant.getReservations().getOrders().size(); i++) {
-        			string = string.concat(i + 1 + ".\n" + restaurant.getReservations().getOrders().get(i).toString() + 
-        					"\n" + "Total Price: " + 
-        					restaurant.getReservations().getOrders().get(i).calculatePrice() + "\n");
-        		}
-           		
-        		info.setText(string);
-        		
-        		ScrollPane scrollPane = new ScrollPane();
-        		scrollPane.setContent(info);
-        		scrollPane.setPrefWidth(200);
-        		
-        		mainScreenArea.add(header, 0, 0);
+
+				Label info = new Label();
+				info.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+
+				String string = "";
+
+				for(int i = 0; i < restaurant.getReservations().getOrders().size(); i++) {
+					string = string.concat(i + 1 + ".\n" + restaurant.getReservations().getOrders().get(i).toString() + 
+							"\n" + "Total Price: " + 
+							restaurant.getReservations().getOrders().get(i).calculatePrice() + "\n");
+				}
+
+				info.setText(string);
+
+				ScrollPane scrollPane = new ScrollPane();
+				scrollPane.setContent(info);
+				scrollPane.setPrefWidth(200);
+
+				mainScreenArea.add(header, 0, 0);
 				mainScreenArea.add(info, 0, 1);
 				mainScreenArea.add(scrollPane, 0, 1);
 			}
 		});
-        
-        viewStatButton.setOnAction(new EventHandler<ActionEvent>() {
-        	
-        	@Override
+
+		viewStatButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
 			public void handle(ActionEvent event) {
-				
-        		mainScreenArea.getChildren().clear();
-        		
-        		Label header = new Label("Today's statistics:");
+
+				mainScreenArea.getChildren().clear();
+
+				Label header = new Label("Today's statistics:");
 				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        		
-        		double total = 0;
-        		String string = "";
-        		
+
+				double total = 0;
+				String string = "";
+
 				for(int i = 0; i < restaurant.getReservations().getOrders().size(); i++)
 					total += restaurant.getReservations().getOrders().get(i).calculatePrice();
-				
+
 				string = string.concat("Total money earned for today: " + total + "\n\nToday's reviews:\n");
-				
+
 				if(restaurant.getReviews().getReviews().size() == 0) {
 					Label notice = new Label("No reviews for today.");
-	        		notice.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
-	        		mainScreenArea.add(notice, 0, 3);
+					notice.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+					mainScreenArea.add(notice, 0, 3);
 				}
 				else {
 					for(int i = 0; i < restaurant.getReviews().getReviews().size(); i++)
 						string = string.concat(i + 1 + ".\n" + restaurant.getReviews().getReviews().get(i) + "\n");
 				}
-				
+
 				Label info = new Label(string);
-        		info.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
-        		
-        		mainScreenArea.add(header, 0, 0);
-        		mainScreenArea.add(info, 0, 1);
+				info.setFont(Font.font("Monaco", FontWeight.NORMAL, 15));
+
+				mainScreenArea.add(header, 0, 0);
+				mainScreenArea.add(info, 0, 1);
 			}
 		});
 
@@ -882,7 +849,6 @@ public class Dashboard {
 				try {
 					XMLFileHandler.saveFile(restaurant, "Data.xml");
 				} catch (JAXBException e) {
-					// TODO Auto-generated catch block
 					AlertBox.display("Error saving file!");
 					e.printStackTrace();
 				}
@@ -1020,9 +986,7 @@ public class Dashboard {
 				try {
 					XMLFileHandler.saveFile(restaurant, "Data.xml");
 				} catch (JAXBException e) {
-					// TODO Auto-generated catch block
 					AlertBox.display("Error saving file!");
-					e.printStackTrace();
 				}
 
 			}
@@ -1034,9 +998,9 @@ public class Dashboard {
 		stage.show();
 	}
 
-	
+
 	public static void showWaiter(Waiter waiter, Stage stage, Restaurant restaurant) throws FileNotFoundException {
-		
+
 
 		stage.setTitle("Dashboard");
 		BorderPane border = new BorderPane();
@@ -1088,31 +1052,31 @@ public class Dashboard {
 		GridPane mainScreenArea = new GridPane();
 		border.setCenter(mainScreenArea);
 		mainScreenArea.setPadding(new Insets(10, 10, 10, 10));
-        mainScreenArea.setVgap(8);
-        mainScreenArea.setHgap(10);
-        
-        GridPane.setHalignment(logOutButton, HPos.RIGHT);
-        
-      //buttons functionality
-        viewOrdersButton.setOnAction(new EventHandler<ActionEvent>() {
-        	
-        	@Override
-       		public void handle(ActionEvent event) {
-        		
-        		mainScreenArea.getChildren().clear();
-        		       		
-        		String date = "Date\n\n";
-        		String time = "Time\n\n";
-        		String number = "Table Number\n\n";
-        		String name = "Customer Name\n\n";
+		mainScreenArea.setVgap(8);
+		mainScreenArea.setHgap(10);
 
-       			for(int i = 0; i < restaurant.getReservations().getOrders().size(); i++) {
-       				date = date.concat(restaurant.getReservations().getOrders().get(i).getDate() + "\n");
-       				time = time.concat(restaurant.getReservations().getOrders().get(i).getTime() + "\n");
-       				number = number.concat(restaurant.getReservations().getOrders().get(i).getTable().getTableNumber() + "\n");
-       				name = name.concat(restaurant.getReservations().getOrders().get(i).getCustomer().getName() + "\n");
-       			}
-       			Label header = new Label("Today's reservations:");
+		GridPane.setHalignment(logOutButton, HPos.RIGHT);
+
+		//buttons functionality
+		viewOrdersButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+				mainScreenArea.getChildren().clear();
+
+				String date = "Date\n\n";
+				String time = "Time\n\n";
+				String number = "Table Number\n\n";
+				String name = "Customer Name\n\n";
+
+				for(int i = 0; i < restaurant.getReservations().getOrders().size(); i++) {
+					date = date.concat(restaurant.getReservations().getOrders().get(i).getDate() + "\n");
+					time = time.concat(restaurant.getReservations().getOrders().get(i).getTime() + "\n");
+					number = number.concat(restaurant.getReservations().getOrders().get(i).getTable().getTableNumber() + "\n");
+					name = name.concat(restaurant.getReservations().getOrders().get(i).getCustomer().getName() + "\n");
+				}
+				Label header = new Label("Today's reservations:");
 
 				header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
@@ -1163,9 +1127,7 @@ public class Dashboard {
 				try {
 					XMLFileHandler.saveFile(restaurant, "Data.xml");
 				} catch (JAXBException e) {
-					// TODO Auto-generated catch block
 					AlertBox.display("Error saving file!");
-					e.printStackTrace();
 				}
 
 			}

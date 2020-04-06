@@ -9,30 +9,17 @@ import employees.Cook;
 import employees.Employee;
 import employees.Manager;
 import employees.Waiter;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -90,7 +77,7 @@ public class LoginScreen {
 						person = restaurant.getPersons().get(index);
 						if(staffUser.isSelected()) {
 							if (person instanceof Employee) {
-								//TODO: redirect to staff type dashboard
+								//redirect to staff type dashboard
 								if(person instanceof Manager) {
 									Manager manager = new Manager(person.getName(),
 											person.getUsername(), person.getPassword());
@@ -130,7 +117,7 @@ public class LoginScreen {
 						}
 						else if (customerUser.isSelected()) {
 							if (person instanceof Customer) {
-								//TODO: redirect to customer dashboard
+								//redirect to customer dashboard
 								Customer customer = new Customer(person.getName(),
 										person.getUsername(), person.getPassword());
 								try {

@@ -1,6 +1,5 @@
 package restaurant;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,29 +18,29 @@ import restaurantReservationSystem.Time;
 @XmlRootElement(name = "order")
 @XmlAccessorType(XmlAccessType.NONE)
 public class Order {
-	
+
 	@XmlElement(name = "table")
 	private Table table;
-	
+
 	@XmlElement(name = "dish")
 	private List<Dish> dishes = new ArrayList<>();
-	
+
 	@XmlElement(name = "customer")
 	private Customer customer;
-	
+
 	@XmlElement(name = "price")
 	private double price;
-	
+
 	@XmlElement(name = "date")
 	private String date;
-	
+
 	@XmlElement(name = "time")
 	private  Time time;
-	
+
 	@XmlElement(name = "paid")
 	private boolean paid;
-	
-	
+
+
 	public Table getTable() {
 		return table;
 	}
@@ -103,7 +102,7 @@ public class Order {
 		Order order = new Order();
 		return order;
 	}
-	
+
 	public ObservableList<Dish> retrieveDishes() {
 		ObservableList<Dish> list = FXCollections.observableArrayList();
 		for (int i = 0; i < dishes.size(); i++) {
@@ -111,12 +110,12 @@ public class Order {
 		}
 		return list;
 	}
-	
+
 	public double calculatePrice()
 	{
 		double price = 0;
 		for (int i = 0; i < dishes.size(); i++) {
-			price += dishes.get(i).getPrice() * (1- dishes.get(i).getTax());
+			price += dishes.get(i).getPrice() * (1 + dishes.get(i).getTax());
 		}
 		this.price = price;
 		return price;

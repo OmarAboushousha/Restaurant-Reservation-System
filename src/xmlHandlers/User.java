@@ -13,30 +13,30 @@ public class User {
 
 	@XmlElement(name = "name")
 	private String name;
-	
+
 	@XmlElement(name = "username")
 	private String username;
-	
+
 	@XmlElement(name = "password")
 	private String password;
-	
+
 	@XmlElement(name = "role")
 	private String role;
-	
+
 	@XmlElement(name = "balance")
 	private double balance;
-	
+
 	@XmlElement(name = "order")
 	private Order order;
-	
+
 	@XmlElement(name = "cardNumber")
 	private String visaCardNumber;
-	
+
 	@XmlElement(name = "pinCode")
 	private String visaCardPinCode;
-	
+
 	public User() {
-		
+
 	}
 
 	public User(String name, String username, String password, String role, double balance, Order order,
@@ -50,8 +50,8 @@ public class User {
 		this.visaCardNumber = visaCardNumber;
 		this.visaCardPinCode = visaCardPinCode;
 	}
-	
-	
+
+
 
 	public User(String name, String username, String password, String role) {
 		this.name = name;

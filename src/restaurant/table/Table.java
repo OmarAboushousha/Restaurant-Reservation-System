@@ -11,27 +11,19 @@ import restaurant.Order;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Table {
 
-	private Order currentOrder;
-	
+
 	@XmlElement(name = "number_of_seats")
 	private int numberOfSeats;
-	
+
 	@XmlElement(name = "number")
 	private int tableNumber;
-	
+
 	@XmlElement(name = "smoking")
 	private boolean smoking;
-	
+
 	@XmlElement(name = "available")
 	private boolean available = true;
-	
-	public Order getCurrentOrder() {
-		return currentOrder;
-	}
 
-	public void setCurrentOrder(Order currentOrder) {
-		this.currentOrder = currentOrder;
-	}
 
 	public int getNumberOfSeats() {
 		return numberOfSeats;
@@ -67,14 +59,14 @@ public class Table {
 
 	public void reserveTable()
 	{
-		
+
 	}
-	
+
 	@Override
 	public String toString() {
 		if (isSmoking())
 			return String.valueOf(tableNumber) + "\t" +  "smoking, " + String.valueOf(numberOfSeats) + " seats";
 		return String.valueOf(tableNumber) + "\t" +  "non-smoking, " + String.valueOf(numberOfSeats) + " seats";
 	}
-	
+
 }

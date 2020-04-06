@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "dishes")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Dishes {
-	
+
 	@XmlElement(name = "dish")
 	List<DishX> dishes = new ArrayList<>();
 
@@ -22,7 +22,5 @@ public class Dishes {
 	public void setDishes(List<DishX> dishes) {
 		this.dishes = dishes;
 	}
-	
-	
 
 }
